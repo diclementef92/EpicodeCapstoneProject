@@ -22,3 +22,8 @@ Contiene inoltre una piattaforma social e consigli per una sana alimentazione e 
 - Front End ->Html, Css, React 
 - Back End ->Java, Spring, JPA, Jdbc, JWT Authentication, PostgreSQL
 
+## Istruzione per eseguire Progetto:
+- scaricare repo
+- aprire la cartella backend con eclipse
+- creare Database di nome: "StayHealth" accessibile sulla porta 5432, è possibile cambiare questi valori nel file application.properties in BackEnd\StayHealth\src\main\resources
+- Run As SpringBootApp
