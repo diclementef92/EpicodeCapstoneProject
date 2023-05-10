@@ -1,23 +1,28 @@
 package com.project.stayhealth.business.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.project.stayhealth.auth.entity.User;
+import com.project.stayhealth.auth.entity.UserToUpdateDTO;
 import com.project.stayhealth.auth.exception.MyAPIException;
 import com.project.stayhealth.auth.exception.ResourceNotFoundException;
 import com.project.stayhealth.auth.repository.UserRepository;
 
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
 	@Autowired
 	private UserRepository repo;
+	
+	@Autowired
+    private ModelMapper modelMapper;
 
 	public List<User> findAll() throws EntityNotFoundException{
 		if(repo.findAll().isEmpty())
@@ -28,12 +33,40 @@ public class UserService {
 		return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 	}
 	
-	public User updateUser(User u) throws ResourceNotFoundException, MyAPIException{
-		User userToUpdate = repo.findById(u.getId()).orElseThrow(() -> new ResourceNotFoundException("User", "id", u.getId()));
+	public User updateUser(Long id, UserToUpdateDTO userDto) throws ResourceNotFoundException, MyAPIException{
+		User userToUpdate = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 		
-		//TODO: verify if exist another user with same username or email
-		if(repo.findByUsernameOrEmail(u.getUsername(),u.getEmail()).isEmpty() || repo.findByUsernameOrEmail(u.getUsername(),u.getEmail()).get().equals(userToUpdate))
-			return repo.save(u);
+		// verify if exist another user with same username or email
+		Optional<User> userFound = repo.findByUsernameOrEmail(userDto.getUsername(),userDto.getEmail());
+		if(userFound.isEmpty() || userFound.get().equals(userToUpdate))
+		{
+			if(userDto.getFirstName()!=null)
+				userToUpdate.setFirstName(userDto.getFirstName());
+			if(userDto.getLastName()!=null)
+				userToUpdate.setLastName(userDto.getLastName());
+			if(userDto.getBirthDay()!=null)
+				userToUpdate.setBirthDay(userDto.getBirthDay());
+			
+			if(userDto.getPhysicalActivityLevel()!=null)
+				userToUpdate.setPhysicalActivityLevel(userDto.getPhysicalActivityLevel());
+			
+			if(userDto.getPhysicallyActive()!=null )
+				if (userDto.getPhysicallyActive().equalsIgnoreCase("true"))
+					userToUpdate.setPhysicallyActive(true);
+				else 
+					userToUpdate.setPhysicallyActive(false);
+			
+			if(userDto.getUsername()!=null)
+				userToUpdate.setUsername(userDto.getUsername());
+			
+			if(userDto.getEmail()!=null)
+				userToUpdate.setEmail(userDto.getEmail());
+			
+			if(userDto.getPassword()!=null)
+				userToUpdate.setPassword(userDto.getPassword());
+			
+			return repo.save(userToUpdate);
+		}	
 		else throw new MyAPIException (HttpStatus.BAD_REQUEST, "username or email already present");
 	}
 	

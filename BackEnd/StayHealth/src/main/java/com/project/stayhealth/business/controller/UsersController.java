@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.stayhealth.auth.entity.User;
+import com.project.stayhealth.auth.entity.UserToUpdateDTO;
 import com.project.stayhealth.auth.exception.ResourceNotFoundException;
 import com.project.stayhealth.business.service.UserService;
 
@@ -42,9 +43,9 @@ public class UsersController {
 		return new ResponseEntity<User>(userService.findById(id), HttpStatus.FOUND)  ;
 	}
 	
-	@PutMapping
+	@PutMapping("/{id}")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		return new ResponseEntity<User>(userService.updateUser(user),HttpStatus.OK);
+	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserToUpdateDTO user) {
+		return new ResponseEntity<User>(userService.updateUser(id,user),HttpStatus.OK);
 	}
 }
