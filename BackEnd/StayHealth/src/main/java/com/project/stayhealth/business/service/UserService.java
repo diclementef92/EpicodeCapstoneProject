@@ -23,7 +23,6 @@ public class UserService {
 	private UserRepository repo;
 
 	public List<User> findAll() throws EntityNotFoundException {
-
 		return repo.findAll();
 	}
 
@@ -72,6 +71,10 @@ public class UserService {
 			return repo.save(userToUpdate);
 		} else
 			throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");
+	}
+
+	public void removeUser(Long id) {
+		repo.delete(findById(id));
 	}
 
 }
