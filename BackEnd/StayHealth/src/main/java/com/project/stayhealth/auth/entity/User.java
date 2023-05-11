@@ -3,6 +3,7 @@ package com.project.stayhealth.auth.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ import com.project.stayhealth.business.entity.EGender;
 import com.project.stayhealth.business.entity.EPhysicalActivityLevel;
 import com.project.stayhealth.business.entity.WeightMeasurement;
 
+@Builder
 @Slf4j
 @Data
 @NoArgsConstructor
