@@ -38,7 +38,7 @@ public class UserConfig {
 		Role userRole = roleRepository.findByRoleName(ERole.ROLE_USER).get();
 		roles.add(userRole);
 
-		return User.builder().firstName(firstname).lastName(lastname)
+		User newUser = User.builder().firstName(firstname).lastName(lastname)
 				.birthDay(LocalDate.now().minusYears(fake.number().numberBetween(20, 80))
 						.minusWeeks(fake.number().numberBetween(1, 20)))
 				.weightKg((double) fake.number().numberBetween(45, 100))
@@ -49,6 +49,10 @@ public class UserConfig {
 				.physicallyActive(random % 2 == 0 ? true : false).username(lastname + fake.number().randomDigit())
 				.roles(roles).email(firstname.substring(0, 1) + "." + lastname + "@mail.it")
 				.password(fake.funnyName().name().replace(" ", "") + fake.number().randomNumber()).build();
+
+		newUser.calculateDailyCaloricNeeds();
+
+		return newUser;
 
 	}
 }

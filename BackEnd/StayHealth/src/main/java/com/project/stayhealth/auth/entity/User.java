@@ -69,6 +69,7 @@ public class User {
 	@Column(nullable = false)
 	private boolean physicallyActive;
 
+	@Column(precision = 2)
 	private Double dailyCaloricNeeds;
 
 //	@OneToMany(mappedBy = "user")
@@ -214,5 +215,6 @@ public class User {
 		}
 
 		setDailyCaloricNeeds(result);
+
 	}
 }
