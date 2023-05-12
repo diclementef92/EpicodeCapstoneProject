@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.stayhealth.auth.entity.User;
 import com.project.stayhealth.auth.exception.ResourceNotFoundException;
 import com.project.stayhealth.auth.repository.UserRepository;
 import com.project.stayhealth.business.entity.WeightMeasurement;
+import com.project.stayhealth.business.entity.WeightMeasurementToUpdateDTO;
 import com.project.stayhealth.business.repository.WeightMeasurementRepository;
 
 @Service
@@ -28,11 +30,21 @@ public class WeightMeasurementService {
 	}
 
 	public WeightMeasurement addWeightMeasurement(Long idUSer, WeightMeasurement w) {
-		w.setUser(userRepo.findById(idUSer).orElseThrow(() -> new ResourceNotFoundException("user", "id", idUSer)));
+		User userFound = userRepo.findById(idUSer)
+				.orElseThrow(() -> new ResourceNotFoundException("user", "id", idUSer));
+
+		w.setUser(userFound);
 		return weightRepo.save(w);
 	}
 
-	public void updateWeightMeasurement(Long idUSer, WeightMeasurement w) {
+	public WeightMeasurement updateWeightMeasurement(Long idWeight, WeightMeasurementToUpdateDTO weightDto) {
+		WeightMeasurement measurementFound = findById(idWeight);
+		if (weightDto.getDate() != null)
+			measurementFound.setDate(weightDto.getDate());
+		if (weightDto.getWeight() != null)
+			measurementFound.setWeight(weightDto.getWeight());
+
+		return weightRepo.save(measurementFound);
 
 	}
 

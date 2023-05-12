@@ -43,6 +43,7 @@ public class UserService {
 		// verify if exist another user with same username or email
 		Optional<User> userFound = repo.findByUsernameOrEmail(userDto.getUsername(), userDto.getEmail());
 		if (userFound.isEmpty() || userFound.get().equals(userToUpdate)) {
+			// update only fields present in Dto body
 			if (userDto.getFirstName() != null)
 				userToUpdate.setFirstName(userDto.getFirstName());
 			if (userDto.getLastName() != null)
@@ -58,7 +59,6 @@ public class UserService {
 					userToUpdate.setPhysicallyActive(true);
 				else
 					userToUpdate.setPhysicallyActive(false);
-
 			if (userDto.getUsername() != null)
 				userToUpdate.setUsername(userDto.getUsername());
 
@@ -68,6 +68,7 @@ public class UserService {
 			if (userDto.getPassword() != null)
 				userToUpdate.setPassword(userDto.getPassword());
 
+			userToUpdate.calculateDailyCaloricNeeds();
 			return repo.save(userToUpdate);
 		} else
 			throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");
