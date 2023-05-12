@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,16 +26,29 @@ public class WeightMeasurementController {
 	@Autowired
 	private WeightMeasurementService service;
 
-	@GetMapping("{id}")
+	@GetMapping("/{idUser}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<List<WeightMeasurement>> findByUserId(@PathVariable Long id) {
-		return new ResponseEntity<List<WeightMeasurement>>(service.findByUserId(id), HttpStatus.FOUND);
+	public ResponseEntity<List<WeightMeasurement>> findByUserId(@PathVariable Long idUser) {
+		return new ResponseEntity<List<WeightMeasurement>>(service.findByUserId(idUser), HttpStatus.FOUND);
 	}
 
-	@PostMapping("{idUser}")
+	@PostMapping("/{idUser}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<WeightMeasurement> addWeightMeasurement(@PathVariable Long idUser,
 			@RequestBody WeightMeasurement weight) {
 		return new ResponseEntity<WeightMeasurement>(service.addWeightMeasurement(idUser, weight), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{idMeasurement}")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	public ResponseEntity<String> removeWeightMeasurement(@PathVariable Long idMeasurement) {
+		return new ResponseEntity<String>(service.removeWeightMeasurement(idMeasurement), HttpStatus.OK);
+	}
+
+	@GetMapping("/ordered-by-date/{idUser}")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	public ResponseEntity<List<WeightMeasurement>> findAllByUserIdOrderedByDateDesc(@PathVariable Long idUser) {
+		return new ResponseEntity<List<WeightMeasurement>>(service.findAllByUserIdOrderedByDateDesc(idUser),
+				HttpStatus.FOUND);
 	}
 }

@@ -31,4 +31,29 @@ public class WeightMeasurementService {
 		w.setUser(userRepo.findById(idUSer).orElseThrow(() -> new ResourceNotFoundException("user", "id", idUSer)));
 		return weightRepo.save(w);
 	}
+
+	public void updateWeightMeasurement(Long idUSer, WeightMeasurement w) {
+
+	}
+
+	public String removeWeightMeasurement(Long idMeasurement) {
+		if (findById(idMeasurement) != null) {
+			weightRepo.deleteById(idMeasurement);
+			return "WeightMeasurement with id " + idMeasurement + " removed!";
+		}
+		return "not found";
+	}
+
+	public List<WeightMeasurement> findAllByUserIdOrderedByDateDesc(Long idUSer) {
+		if (userRepo.findById(idUSer).isPresent()) {
+			if (weightRepo.findAllByUserIdOrderedByDateDesc(idUSer).isPresent()) {
+				return weightRepo.findAllByUserIdOrderedByDateDesc(idUSer).get();
+			} else
+				throw new ResourceNotFoundException("WeightMeasurement", "id", idUSer);
+
+		} else
+			throw new ResourceNotFoundException("user", "id", idUSer);
+
+	}
+
 }
