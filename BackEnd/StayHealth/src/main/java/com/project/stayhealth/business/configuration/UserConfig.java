@@ -40,7 +40,7 @@ public class UserConfig {
 
 		User newUser = User.builder().firstName(firstname).lastName(lastname)
 				.birthDay(LocalDate.now().minusYears(fake.number().numberBetween(20, 80))
-						.minusWeeks(fake.number().numberBetween(1, 20)))
+						.minusWeeks(fake.number().numberBetween(1, 12)))
 				.weightKg((double) fake.number().numberBetween(45, 100))
 				.heightCm((double) fake.number().numberBetween(140, 200))
 				.gender(random % 2 == 0 ? EGender.MALE : EGender.FEMALE) // 50% MALE and 50% FEMALE

@@ -187,7 +187,7 @@ public class User {
 					}
 				}
 			}
-		} else if (age > 60 && age < 75) {
+		} else if (age >= 60 && age < 75) {
 			if (getGender().equals(EGender.MALE))
 				if (isPhysicallyActive())
 					result *= 1.51;
