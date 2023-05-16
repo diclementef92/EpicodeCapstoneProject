@@ -3,6 +3,7 @@ package com.project.stayhealth.business.runner;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ public class FoodRunner implements ApplicationRunner {
 	@Autowired
 	private FoodService service;
 
+	@Value("${app.foods.useCsvFilePath}")
+	private Boolean useCsvFilePath;
+
 	@Autowired
 	@Qualifier("FakeFoodBean")
 	ObjectProvider<Food> fakeFoodBean;
@@ -25,11 +29,18 @@ public class FoodRunner implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		if (service.findAll().isEmpty()) {
-//			for (int i = 0; i < 50; i++) {
-//				service.createFood(fakeFoodBean.getObject());
-//			}
-			service.importFoods();
-			log.info("fake foods created");
+
+			if (useCsvFilePath) {
+				// using csv file
+				service.importFoodsFromCSVFile();
+				log.info("foods imported form file ");
+			} else {
+				// using method for create fake records
+				for (int i = 0; i < 100; i++) {
+					service.createFood(fakeFoodBean.getObject());
+				}
+				log.info("foods created with javaFaker ");
+			}
 		}
 
 	}

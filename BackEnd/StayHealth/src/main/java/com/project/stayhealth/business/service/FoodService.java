@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.opencsv.CSVReader;
@@ -23,8 +24,11 @@ public class FoodService {
 	@Autowired
 	FoodRepository foodRepository;
 
-	public void importFoods() throws IOException, FileNotFoundException, CsvValidationException {
-		String fileName = "src\\main\\resources\\foods-complete_mod.csv";
+	@Value("${app.foods.csvFilePath}")
+	private String fileName;
+
+	public void importFoodsFromCSVFile() throws IOException, FileNotFoundException, CsvValidationException {
+//		String fileName = "src\\main\\resources\\foods-complete_mod.csv";
 
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(fileName)).withSkipLines(1).build()) {
 			String[] lineInArray = reader.readNext();

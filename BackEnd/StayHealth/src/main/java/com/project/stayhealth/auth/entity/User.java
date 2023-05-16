@@ -120,7 +120,7 @@ public class User {
 			throw new MyAPIException(HttpStatus.NOT_ACCEPTABLE,
 					getBirthDay() + " is not a valid value for birthDay, the age range is between 18 e 120");
 		}
-		log.info("basal metabolic rate " + result);
+//		log.info("basal metabolic rate " + result);
 
 		if (age >= 18 && age < 60) {
 			if (getGender().equals(EGender.MALE)) {

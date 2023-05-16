@@ -33,7 +33,7 @@ public class UserService {
 	public User createUser(User u) {
 		if (repo.findByUsernameOrEmail(u.getUsername(), u.getEmail()).isPresent())
 			throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");
-		log.info("user " + u.toString());
+//		log.info("user " + u.toString());
 		return repo.save(u);
 	}
 
