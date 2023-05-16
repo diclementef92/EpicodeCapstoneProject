@@ -25,10 +25,10 @@ public class FoodRunner implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		if (service.findAll().isEmpty()) {
-			for (int i = 0; i < 50; i++) {
-				service.createFood(fakeFoodBean.getObject());
-				
-			}
+//			for (int i = 0; i < 50; i++) {
+//				service.createFood(fakeFoodBean.getObject());
+//			}
+			service.importFoods();
 			log.info("fake foods created");
 		}
 

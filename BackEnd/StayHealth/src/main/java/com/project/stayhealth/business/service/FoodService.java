@@ -25,18 +25,21 @@ public class FoodService {
 
 	public void importFoods() throws IOException, FileNotFoundException, CsvValidationException {
 		String fileName = "src\\main\\resources\\foods-complete_mod.csv";
+
 		try (CSVReader reader = new CSVReaderBuilder(new FileReader(fileName)).withSkipLines(1).build()) {
 			String[] lineInArray = reader.readNext();
+
 			while (lineInArray != null) {
-				System.out.println(lineInArray[1] + " - " + lineInArray[2] + " - " + lineInArray[3]);
+//				System.out.println(lineInArray[1] + " - " + lineInArray[2] + " - " + lineInArray[3]);
 				Food food = Food.builder().description(lineInArray[1]).groupDescr(lineInArray[2])
 						.kCal(Double.parseDouble((lineInArray[3].equals("") ? "0" : lineInArray[3]))).build();
+
 				foodRepository.save(food);
 
 				lineInArray = reader.readNext();
 			}
-
 		}
+
 	}
 
 	public Food createFood(Food food) {
@@ -57,6 +60,7 @@ public class FoodService {
 
 	}
 
+	// con scanner
 //	Scanner sc = new Scanner(new File("src\\main\\resources\\foods-complete_mod.csv"));
 //	sc.useDelimiter(",");
 //	while (sc.hasNext()) {
@@ -75,4 +79,17 @@ public class FoodService {
 //	}
 //	sc.close();
 
+	// con csvReader
+//	try (CSVReader reader = new CSVReaderBuilder(new FileReader(fileName)).withSkipLines(1).build()) {
+//		String[] lineInArray = reader.readNext();
+//		while (lineInArray != null) {
+//			System.out.println(lineInArray[1] + " - " + lineInArray[2] + " - " + lineInArray[3]);
+//			Food food = Food.builder().description(lineInArray[1]).groupDescr(lineInArray[2])
+//					.kCal(Double.parseDouble((lineInArray[3].equals("") ? "0" : lineInArray[3]))).build();
+//			foodRepository.save(food);
+//
+//			lineInArray = reader.readNext();
+//		}
+//
+//	}
 }
