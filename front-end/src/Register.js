@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import "./Register.css";
+import { InputGroup } from "react-bootstrap";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -26,6 +27,13 @@ const Register = () => {
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthDay, setBirthDay] = useState("");
+
+  const [initialWeightKg, setInitialWeightKg] = useState(0);
+  const [heightCm, setHeightCm] = useState(0);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
@@ -91,11 +99,11 @@ const Register = () => {
                 icon={faCheck}
                 className={validName ? "valid" : "hide"}
               />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className={validName || !user ? "hide" : "invalid"}
+              />
             </label>
-            <FontAwesomeIcon
-              icon={faTimes}
-              className={validName || !user ? "hide" : "invalid"}
-            />
             <input
               type="text"
               id="username"
@@ -196,7 +204,81 @@ const Register = () => {
               <FontAwesomeIcon icon={faInfoCircle} />
               Must match the first password input field.
             </p>
+            <br />
+            {/* First Name field*/}
+            <label htmlFor="firstName">First Name:</label>
+            <input
+              type="text"
+              id="firstName"
+              autoComplete="off"
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+              required
+            />
+            {/* Last Name field*/}
+            <label htmlFor="lastName">Last Name:</label>
+            <input
+              type="text"
+              id="lastName"
+              autoComplete="off"
+              onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+              required
+            />
+            {/* Last Name field*/}
+            <label htmlFor="birthDay">BirthDay:</label>
+            <input
+              type="date"
+              id="birthDay"
+              autoComplete="off"
+              onChange={(e) => setBirthDay(e.target.value)}
+              value={birthDay}
+              required
+            />
+            <br />
+            {/* initial Weight Kg field*/}
+            <label htmlFor="initialWeightKg">Actual Weight (Kg):</label>
+            <input
+              type="number"
+              id="initialWeightKg"
+              autoComplete="off"
+              onChange={(e) => setInitialWeightKg(e.target.value)}
+              value={initialWeightKg}
+              required
+              step="0.01"
+              min="30"
+              max="300"
+            />
+            <span className="validity"></span>
+            {/* height Cm field*/}
+            <label htmlFor="heightCm">Height (Cm):</label>
+            <input
+              type="number"
+              id="heightCm"
+              autoComplete="off"
+              onChange={(e) => setHeightCm(e.target.value)}
+              value={heightCm}
+              required
+              step="0.01"
+              min="100"
+              max="250"
+            />
+            <span className="validity"></span>
+
+            {/* Gender field*/}
+            <div>
+              <input type="radio" id="male" name="gender" value="MALE" />
+              <label for="male">male</label>
+            </div>
+            <div>
+              <input type="radio" id="female" name="gender" value="FEMALE" />
+              <label for="female">female</label>
+            </div>
+            <br />
+
+            <br />
             <button
+              className="btn-primary"
               disabled={!validName || !validPwd || !validMatch ? true : false}
             >
               Sign Up
