@@ -5,8 +5,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
-import "./Register.css";
-import { InputGroup } from "react-bootstrap";
+import "../assets/Register.css";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -67,7 +66,7 @@ const Register = () => {
       setErrMsg("Invalid Entry");
       return;
     }
-
+    // TODO: chiamare metodo post per registrazione
     console.log(user, pwd);
     setSuccess(true);
   };
@@ -275,6 +274,35 @@ const Register = () => {
               <label for="female">female</label>
             </div>
             <br />
+
+            {/* physicalActivityLevel field*/}
+            <label>Physical Activity Level:</label>
+            <div>
+              <input type="radio" id="high" name="phisicalLevel" value="HIGH" />
+              <label for="high">HIGH</label>
+
+              <input
+                type="radio"
+                id="medium"
+                name="phisicalLevel"
+                value="MEDIUM"
+              />
+              <label for="medium">MEDIUM</label>
+
+              <input type="radio" id="low" name="phisicalLevel" value="LOW" />
+              <label for="low">LOW</label>
+            </div>
+            <br />
+            {/* physicallyActive field*/}
+            <div>
+              <input
+                type="checkbox"
+                id="physicallyActive"
+                name="physicallyActive"
+                value="true"
+              />
+              <label for="physicallyActive">physically Active</label>
+            </div>
 
             <br />
             <button
