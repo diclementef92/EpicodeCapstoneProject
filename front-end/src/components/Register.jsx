@@ -6,10 +6,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import "../assets/Register.css";
+import { SignUp } from "./FechAuthentication";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/register";
+
+const registerDto = {
+  firstName: "",
+  lastName: "",
+  birthDay: "",
+  initialWeightKg: 0.0,
+  heightCm: 0.0,
+  gender: "",
+  physicalActivityLevel: "",
+  physicallyActive: false,
+  username: "",
+  email: "",
+  password: "",
+};
 
 const Register = () => {
   const userRef = useRef();
@@ -18,6 +32,10 @@ const Register = () => {
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
+
+  const [email, setEmail] = useState("");
+  // const [validEmail, setValidEmail] = useState(false);
+  // const [emailFocus, setEmailFocus] = useState(false);
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
@@ -34,11 +52,17 @@ const Register = () => {
   const [initialWeightKg, setInitialWeightKg] = useState(0);
   const [heightCm, setHeightCm] = useState(0);
 
+  // const [gender, setGender] = useState("");
+  // const [physicalActivityLevel, setPhysicalActivityLevel] = useState("");
+  // const [physicallyActive, setPhysicallyActive] = useState(false);
+
   const [errMsg, setErrMsg] = useState("");
+  const [responseMsg, setResponseMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    userRef.current.focus(); // at beginning focus on username field
+    // at beginning focus on username field
+    if (userRef) userRef?.current.focus();
   }, []);
 
   useEffect(() => {
@@ -66,8 +90,18 @@ const Register = () => {
       setErrMsg("Invalid Entry");
       return;
     }
-    // TODO: chiamare metodo post per registrazione
-    console.log(user, pwd);
+
+    registerDto.firstName = firstName;
+    registerDto.lastName = lastName;
+    registerDto.birthDay = birthDay;
+    registerDto.initialWeightKg = initialWeightKg;
+    registerDto.heightCm = heightCm;
+    registerDto.email = email;
+    registerDto.username = user;
+    registerDto.password = pwd;
+
+    setResponseMsg(await SignUp(registerDto));
+
     setSuccess(true);
   };
 
@@ -75,7 +109,7 @@ const Register = () => {
     <>
       {success ? (
         <section>
-          <h1>Success!</h1>
+          <h1>{responseMsg}</h1>
           <p>
             <a href="#">Sign In</a>
           </p>
@@ -131,6 +165,19 @@ const Register = () => {
               <br />
               Letters, numbers, underscores, hyphens allowed.
             </p>
+            {/* Email field */}
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              autoComplete="off"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              required
+              //  onFocus={() => setUserFocus(true)}
+              // onBlur={() => setUserFocus(false)}
+            />
+
             {/* Password Field */}
             <label htmlFor="password">
               Password:
@@ -266,31 +313,69 @@ const Register = () => {
 
             {/* Gender field*/}
             <div>
-              <input type="radio" id="male" name="gender" value="MALE" />
-              <label for="male">male</label>
+              <input
+                type="radio"
+                id="male"
+                name="gender"
+                value="MALE"
+                required
+                onClick={(e) => {
+                  registerDto.gender = e.target.value;
+                }}
+              />
+              <label htmlFor="male">male</label>
             </div>
             <div>
-              <input type="radio" id="female" name="gender" value="FEMALE" />
-              <label for="female">female</label>
+              <input
+                type="radio"
+                id="female"
+                name="gender"
+                value="FEMALE"
+                required
+                onClick={(e) => {
+                  registerDto.gender = e.target.value;
+                }}
+              />
+              <label htmlFor="female">female</label>
             </div>
             <br />
 
             {/* physicalActivityLevel field*/}
             <label>Physical Activity Level:</label>
             <div>
-              <input type="radio" id="high" name="phisicalLevel" value="HIGH" />
-              <label for="high">HIGH</label>
-
+              <input
+                type="radio"
+                id="high"
+                name="physicalActivityLevel"
+                value="HIGH"
+                required
+                onClick={(e) => {
+                  registerDto.physicalActivityLevel = e.target.value;
+                }}
+              />
+              <label htmlFor="high">HIGH</label>
               <input
                 type="radio"
                 id="medium"
-                name="phisicalLevel"
+                name="physicalActivityLevel"
                 value="MEDIUM"
+                required
+                onClick={(e) => {
+                  registerDto.physicalActivityLevel = e.target.value;
+                }}
               />
-              <label for="medium">MEDIUM</label>
-
-              <input type="radio" id="low" name="phisicalLevel" value="LOW" />
-              <label for="low">LOW</label>
+              <label htmlFor="medium">MEDIUM</label>
+              <input
+                type="radio"
+                id="low"
+                name="physicalActivityLevel"
+                value="LOW"
+                required
+                onClick={(e) => {
+                  registerDto.physicalActivityLevel = e.target.value;
+                }}
+              />
+              <label htmlFor="low">LOW</label>
             </div>
             <br />
             {/* physicallyActive field*/}
@@ -299,9 +384,11 @@ const Register = () => {
                 type="checkbox"
                 id="physicallyActive"
                 name="physicallyActive"
-                value="true"
+                onClick={() => {
+                  registerDto.physicallyActive = !registerDto.physicallyActive;
+                }}
               />
-              <label for="physicallyActive">physically Active</label>
+              <label htmlFor="physicallyActive">physically Active</label>
             </div>
 
             <br />
