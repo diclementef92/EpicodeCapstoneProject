@@ -15,10 +15,32 @@ export const SignUp = async (props) => {
     if (!response.ok) {
       console.log("Authentication: Error in SignUp,  status", response.status);
     }
+
     const data = await response.text();
     console.log(data);
     return data;
   } catch (error) {
     console.log("Authentication: Error in SignUp fetch", error);
+  }
+};
+
+export const SignIn = async (props) => {
+  try {
+    const response = await fetch(AuthURL + "/signin", {
+      method: "POST",
+      body: JSON.stringify({ ...props, roles: ["ROLE_USER"] }),
+      headers: myHeaders,
+      redirect: "follow",
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.log("Authentication: Error in SignIn,  status", response.status);
+      return { ...data, status: response.status };
+    }
+    return data; // return success string message
+  } catch (error) {
+    console.log("Authentication: Error in SignIn fetch", error);
   }
 };

@@ -48,7 +48,7 @@ public class UserConfig {
 						: random % 3 == 0 ? EPhysicalActivityLevel.MEDIUM : EPhysicalActivityLevel.HIGH)
 				.physicallyActive(random % 2 == 0 ? true : false).username(lastname + fake.number().randomDigit())
 				.roles(roles).email(firstname.substring(0, 1) + "." + lastname + "@mail.it")
-				.password(fake.funnyName().name().replace(" ", "") + fake.number().randomNumber()).build();
+				.password(fake.funnyName().name().replace(" ", "") + "!" + fake.number().randomNumber()).build();
 
 		newUser.calculateDailyCaloricNeeds();
 
