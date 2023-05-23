@@ -1,49 +1,34 @@
-const AuthURL = "http://localhost:8080/api/auth";
-var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+const BASEURL = "http://localhost:8080/api/users/";
 
-export const SignUp = async (props) => {
-  try {
-    console.log(props);
-    const response = await fetch(AuthURL + "/signup", {
-      method: "POST",
-      body: JSON.stringify({ ...props, roles: ["ROLE_USER"] }),
-      headers: myHeaders,
-      redirect: "follow",
-    });
+export const FetchUser = async () => {
+  if (localStorage.getItem("username") && localStorage.getItem("token")) {
+    try {
+      const response = await fetch(BASEURL + localStorage.getItem("username"), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        redirect: "manual",
+      });
+      if (!response.ok) {
+        console.log("Error getting user data,  status", response.status);
+        console.log(localStorage.getItem("token"));
+        console.log(localStorage.getItem("username"));
 
-    if (!response.ok) {
-      console.log("Authentication: Error in SignUp,  status", response.status);
+        return { status: response.status };
+      }
+
+      const data = await response.json();
+      console.log(data);
+      return data; // return user data
+    } catch (error) {
+      console.log("Error getting user data: Error in getUserData fetch", error);
+      return {
+        errMessage: "Error getting user data: Error in getUserData fetch",
+      };
     }
-
-    const data = await response.text();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log("Authentication: Error in SignUp fetch", error);
-  }
-};
-
-export const SignIn = async (props) => {
-  try {
-    const response = await fetch(AuthURL + "/signin", {
-      method: "POST",
-      body: JSON.stringify({ ...props, roles: ["ROLE_USER"] }),
-      headers: myHeaders,
-      redirect: "follow",
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.log("Authentication: Error in SignIn,  status", response.status);
-      return { ...data, status: response.status };
-    }
-
-    process.env.MY_TOKEN = data.accessToken; //save token
-
-    return data; // return success string message
-  } catch (error) {
-    console.log("Authentication: Error in SignIn fetch", error);
+  } else {
+    return { errMessage: "user not logged in" };
   }
 };

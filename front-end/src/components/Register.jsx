@@ -111,7 +111,7 @@ const Register = () => {
         <section>
           <h1>{responseMsg}</h1>
           <p>
-            <a href="./Login.jsx">Sign In</a>
+            <a href="./login">Sign In</a>
           </p>
         </section>
       ) : (
@@ -404,7 +404,7 @@ const Register = () => {
             <br />
             <span className="line">
               {/*put router link here*/}
-              <a href="#">Sign In</a>
+              <a href="./login">Sign In</a>
             </span>
           </p>
         </section>

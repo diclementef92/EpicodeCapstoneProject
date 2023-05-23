@@ -1,14 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FetchUser } from "../hooks/FetchUser";
 
-const Dashboard = ({ username }) => {
-  useEffect(() => {}, []);
+const Dashboard = () => {
+  const [username, setUsername] = useState();
+  const [errMessage, setErrMessage] = useState();
+
+  const fetchUser = async () => {
+    const user = await FetchUser();
+    if (user.errMessage) {
+      setErrMessage(errMessage);
+    } else {
+      setUsername(user.username);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <>
       <h1>Dashboard</h1>
-      <h2>{username}</h2>
+      {errMessage ? errMessage : <h2>{username}</h2>}
     </>
   );
 };

@@ -83,7 +83,7 @@ const Login = () => {
         <section>
           <h1>{responseMsg}</h1>
           <p>
-            <a href="/Dashboard">Go to DashBoard</a>
+            <a href="/dashboard">Go to DashBoard</a>
           </p>
         </section>
       ) : (
