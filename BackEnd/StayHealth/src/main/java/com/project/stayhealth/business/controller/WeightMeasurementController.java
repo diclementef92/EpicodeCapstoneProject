@@ -31,7 +31,7 @@ public class WeightMeasurementController {
 	@GetMapping("/{idMeasurement}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<WeightMeasurement> findByIdMeasurement(@PathVariable Long idMeasurement) {
-		return new ResponseEntity<WeightMeasurement>(service.findById(idMeasurement), HttpStatus.FOUND);
+		return new ResponseEntity<WeightMeasurement>(service.findById(idMeasurement), HttpStatus.OK);
 	}
 
 	@PutMapping("/{idMeasurement}")
@@ -51,7 +51,7 @@ public class WeightMeasurementController {
 	@GetMapping("/user/{idUser}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<List<WeightMeasurement>> findByUserId(@PathVariable Long idUser) {
-		return new ResponseEntity<List<WeightMeasurement>>(service.findByUserId(idUser), HttpStatus.FOUND);
+		return new ResponseEntity<List<WeightMeasurement>>(service.findByUserId(idUser), HttpStatus.OK);
 	}
 
 	@PostMapping("/user/{idUser}")
@@ -65,6 +65,6 @@ public class WeightMeasurementController {
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<List<WeightMeasurement>> findAllByUserIdOrderedByDateDesc(@PathVariable Long idUser) {
 		return new ResponseEntity<List<WeightMeasurement>>(service.findAllByUserIdOrderedByDateDesc(idUser),
-				HttpStatus.FOUND);
+				HttpStatus.OK);
 	}
 }

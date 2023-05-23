@@ -3,6 +3,8 @@ package com.project.stayhealth.business.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +21,13 @@ public class FoodController {
 	private FoodService foodService;
 
 	@GetMapping("{id}")
-	public Food findByID(@PathVariable Long id) {
-		return foodService.findByID(id);
+	public ResponseEntity<Food> findByID(@PathVariable Long id) {
+		return new ResponseEntity<Food>(foodService.findByID(id), HttpStatus.OK);
 	}
 
 	@GetMapping
-	public List<Food> findByDescriptionLike(@RequestParam String descr) {
-		return foodService.findByDescriptionLike(descr);
+	public ResponseEntity<List<Food>> findByDescriptionLike(@RequestParam String descr) {
+		return new ResponseEntity<List<Food>>(foodService.findByDescriptionLike(descr), HttpStatus.OK);
 	}
 
 }

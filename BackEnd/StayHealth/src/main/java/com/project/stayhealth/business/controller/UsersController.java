@@ -35,7 +35,7 @@ public class UsersController {
 	public ResponseEntity<List<User>> getAllUsers() {
 		if (userService.findAll().isEmpty())
 			throw new EntityNotFoundException("no users found");
-		return new ResponseEntity<List<User>>(userService.findAll(), HttpStatus.FOUND);
+		return new ResponseEntity<List<User>>(userService.findAll(), HttpStatus.OK);
 
 	}
 
@@ -48,7 +48,7 @@ public class UsersController {
 	@GetMapping("/{username}")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-		return new ResponseEntity<User>(userService.findByUsername(username), HttpStatus.FOUND);
+		return new ResponseEntity<User>(userService.findByUsername(username), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
