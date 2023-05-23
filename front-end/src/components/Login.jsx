@@ -7,6 +7,9 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { SignIn } from "../hooks/FechAuthentication";
 import "../assets/Register.css";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import { Button, FormControl } from "react-bootstrap";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -96,10 +99,28 @@ const Login = () => {
             {errMsg}
           </p>
           <h1>Login</h1>
-          <form onSubmit={handleSubmit}>
+
+          <Form onSubmit={handleSubmit}>
             {/* Username field */}
-            <label htmlFor="username">
-              UserName:
+
+            <FloatingLabel label={"Username"} className="mb-4">
+              <Form.Control
+                // className="form-control"
+                placeholder="username"
+                type="text"
+                id="username"
+                ref={userRef}
+                autoComplete="off"
+                onChange={(e) => setUser(e.target.value)}
+                value={user}
+                required
+                //for screen reader
+                aria-invalid={validName ? "false" : "true"}
+                aria-describedby="uidnote"
+                //
+                onFocus={() => setUserFocus(true)}
+                onBlur={() => setUserFocus(false)}
+              />
               <FontAwesomeIcon
                 icon={faCheck}
                 className={validName ? "valid" : "hide"}
@@ -108,22 +129,8 @@ const Login = () => {
                 icon={faTimes}
                 className={validName || !user ? "hide" : "invalid"}
               />
-            </label>
-            <input
-              type="text"
-              id="username"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              required
-              //for screen reader
-              aria-invalid={validName ? "false" : "true"}
-              aria-describedby="uidnote"
-              //
-              onFocus={() => setUserFocus(true)}
-              onBlur={() => setUserFocus(false)}
-            />
+            </FloatingLabel>
+
             <p
               id="uidnote"
               className={
@@ -139,8 +146,18 @@ const Login = () => {
             </p>
 
             {/* Password Field */}
-            <label htmlFor="password">
-              Password:
+            <FloatingLabel label="Password">
+              <Form.Control
+                type="password"
+                id="password"
+                onChange={(e) => setPwd(e.target.value)}
+                value={pwd}
+                required
+                aria-invalid={validPwd ? "false" : "true"}
+                aria-describedby="pwdnote"
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
+              />
               <FontAwesomeIcon
                 icon={faCheck}
                 className={validPwd ? "valid" : "hide"}
@@ -149,18 +166,7 @@ const Login = () => {
                 icon={faTimes}
                 className={validPwd || !pwd ? "hide" : "invalid"}
               />
-            </label>
-            <input
-              type="password"
-              id="password"
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
-              required
-              aria-invalid={validPwd ? "false" : "true"}
-              aria-describedby="pwdnote"
-              onFocus={() => setPwdFocus(true)}
-              onBlur={() => setPwdFocus(false)}
-            />
+            </FloatingLabel>
             <p
               id="pwdnote"
               className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
@@ -179,13 +185,13 @@ const Login = () => {
               <span aria-label="percent">%</span>
             </p>
             <br />
-            <button
+            <Button
               className="btn-primary"
               disabled={!validName || !validPwd ? true : false}
             >
               Sign In
-            </button>
-          </form>
+            </Button>
+          </Form>
         </section>
       )}
     </>

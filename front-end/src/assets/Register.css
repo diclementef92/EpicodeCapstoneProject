@@ -16,7 +16,7 @@ section {
 .instructions {
   font-size: 0.75rem;
   border-radius: 0.5rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   color: #fff;
   padding: 0.25rem;
   position: relative;
