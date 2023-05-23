@@ -30,6 +30,11 @@ public class UserService {
 		return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 	}
 
+	public User findByUsername(String username) throws ResourceNotFoundException {
+		return repo.findByUsername(username)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+	}
+
 	public User createUser(User u) {
 		if (repo.findByUsernameOrEmail(u.getUsername(), u.getEmail()).isPresent())
 			throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");

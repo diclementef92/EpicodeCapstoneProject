@@ -39,10 +39,16 @@ public class UsersController {
 
 	}
 
-	@GetMapping("/{id}")
+//	@GetMapping("/{id}")
+//	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
+//	public ResponseEntity<User> getUserById(@PathVariable Long id) {
+//		return new ResponseEntity<User>(userService.findById(id), HttpStatus.FOUND);
+//	}
+
+	@GetMapping("/{username}")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
-	public ResponseEntity<User> getUserById(@PathVariable Long id) {
-		return new ResponseEntity<User>(userService.findById(id), HttpStatus.FOUND);
+	public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+		return new ResponseEntity<User>(userService.findByUsername(username), HttpStatus.FOUND);
 	}
 
 	@PutMapping("/{id}")
