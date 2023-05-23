@@ -39,6 +39,9 @@ export const SignIn = async (props) => {
       console.log("Authentication: Error in SignIn,  status", response.status);
       return { ...data, status: response.status };
     }
+
+    process.env.MY_TOKEN = data.accessToken; //save token
+
     return data; // return success string message
   } catch (error) {
     console.log("Authentication: Error in SignIn fetch", error);

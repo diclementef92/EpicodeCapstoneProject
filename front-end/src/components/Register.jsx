@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import "../assets/Register.css";
-import { SignUp } from "./FechAuthentication";
+import { SignUp } from "../hooks/FechAuthentication";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -111,7 +111,7 @@ const Register = () => {
         <section>
           <h1>{responseMsg}</h1>
           <p>
-            <a href="#">Sign In</a>
+            <a href="./Login.jsx">Sign In</a>
           </p>
         </section>
       ) : (

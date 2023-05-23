@@ -40,13 +40,13 @@ public class UsersController {
 	}
 
 	@GetMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	public ResponseEntity<User> getUserById(@PathVariable Long id) {
 		return new ResponseEntity<User>(userService.findById(id), HttpStatus.FOUND);
 	}
 
 	@PutMapping("/{id}")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
 	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserToUpdateDTO user) {
 		return new ResponseEntity<User>(userService.updateUser(id, user), HttpStatus.OK);
 	}

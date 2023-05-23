@@ -5,7 +5,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
-import { SignIn } from "./FechAuthentication";
+import { SignIn } from "../hooks/FechAuthentication";
 import "../assets/Register.css";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -72,6 +72,7 @@ const Login = () => {
       setSuccess(false);
     } else {
       setResponseMsg("Wellcome " + res.username);
+      console.log(res);
       setSuccess(true);
     }
   };
@@ -82,7 +83,7 @@ const Login = () => {
         <section>
           <h1>{responseMsg}</h1>
           <p>
-            <a href="#">Go to DashBoard</a>
+            <a href="/Dashboard">Go to DashBoard</a>
           </p>
         </section>
       ) : (
