@@ -37,13 +37,13 @@ section {
 }
 
 .valid {
-  color: limegreen;
-  margin-left: 0.25rem;
+  border-color: rgb(0, 221, 18);
+  border-width: 0.2em;
 }
 
 .invalid {
-  color: red;
-  margin-left: 0.25rem;
+  border-color: red;
+  border-width: 0.2em;
 }
 
 .errmsg {
