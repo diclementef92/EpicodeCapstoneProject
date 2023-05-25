@@ -1,15 +1,21 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Home from "./Home";
+import { Button, Card, Container } from "react-bootstrap";
 
 const PageNotFound = () => {
   useEffect(() => {}, []);
 
   return (
-    <>
-      <h1>Page Not Found</h1>
-      <Link to={"/"}>Go to Home</Link>
-    </>
+    <Container className="d-flex justify-content-sm-center mt-4">
+      <Card style={{ width: "18rem" }} className="text-center">
+        <Card.Body>
+          <Card.Title>Page not Found</Card.Title>
+          <Card.Text>Go back to Home</Card.Text>
+          <Button href={"./"}>Home</Button>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
 

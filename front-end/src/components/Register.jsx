@@ -128,7 +128,7 @@ const Register = () => {
           <Col>
             <Card style={{ width: "18rem" }}>
               <Card.Body className="text-center">
-                <Card.Title>Login</Card.Title>
+                <Card.Title>Register</Card.Title>
                 <p
                   ref={errRef}
                   className={errMsg ? "errmsg" : "offscreen"}
@@ -418,7 +418,7 @@ const Register = () => {
                   Already registered?
                   <br />
                   <span className="line">
-                    <a href="./login">Sign In</a>
+                    <a href="./login">Go to Login Page</a>
                   </span>
                 </p>
               </Card.Body>

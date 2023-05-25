@@ -17,6 +17,7 @@ import {
   FormControl,
   Row,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -106,109 +107,122 @@ const Login = () => {
           <Col>
             <Card style={{ width: "18rem" }}>
               <Card.Body className="text-center">
-                <Card.Title>Login</Card.Title>
+                {success ? (
+                  <>
+                    <Card.Title>{responseMsg}</Card.Title>
+                    <Link to={"./dashboard"}>Go to DashBoard</Link>
+                  </>
+                ) : (
+                  <>
+                    <Card.Title>Login</Card.Title>
 
-                <p
-                  ref={errRef}
-                  className={errMsg ? "errmsg" : "offscreen"}
-                  aria-live="assertive"
-                >
-                  {errMsg}
-                </p>
+                    <p
+                      ref={errRef}
+                      className={errMsg ? "errmsg" : "offscreen"}
+                      aria-live="assertive"
+                    >
+                      {errMsg}
+                    </p>
 
-                {/* Form */}
-                <Form onSubmit={handleSubmit}>
-                  {/* Username field */}
+                    {/* Form */}
+                    <Form onSubmit={handleSubmit}>
+                      {/* Username field */}
 
-                  <FloatingLabel label="Username" className="mb-2">
-                    <Form.Control
-                      className={user ? (validName ? "valid" : "invalid") : ""}
-                      placeholder="username"
-                      type="text"
-                      id="username"
-                      ref={userRef}
-                      autoComplete="off"
-                      onChange={(e) => setUser(e.target.value)}
-                      value={user}
-                      required
-                      //for screen reader
-                      aria-invalid={validName ? "false" : "true"}
-                      aria-describedby="uidnote"
-                      //
-                      onFocus={() => setUserFocus(true)}
-                      onBlur={() => setUserFocus(false)}
-                    />
-                  </FloatingLabel>
+                      <FloatingLabel label="Username" className="mb-2">
+                        <Form.Control
+                          className={
+                            user ? (validName ? "valid" : "invalid") : ""
+                          }
+                          placeholder="username"
+                          type="text"
+                          id="username"
+                          ref={userRef}
+                          autoComplete="off"
+                          onChange={(e) => setUser(e.target.value)}
+                          value={user}
+                          required
+                          //for screen reader
+                          aria-invalid={validName ? "false" : "true"}
+                          aria-describedby="uidnote"
+                          //
+                          onFocus={() => setUserFocus(true)}
+                          onBlur={() => setUserFocus(false)}
+                        />
+                      </FloatingLabel>
 
-                  <p
-                    id="uidnote"
-                    className={
-                      userFocus && user && !validName
-                        ? "instructions"
-                        : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    4 to 24 characters.
-                    <br />
-                    Must begin with a letter.
-                    <br />
-                    Letters, numbers, underscores, hyphens allowed.
-                  </p>
+                      <p
+                        id="uidnote"
+                        className={
+                          userFocus && user && !validName
+                            ? "instructions"
+                            : "offscreen"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        4 to 24 characters.
+                        <br />
+                        Must begin with a letter.
+                        <br />
+                        Letters, numbers, underscores, hyphens allowed.
+                      </p>
 
-                  {/* Password Field */}
-                  <FloatingLabel label="Password">
-                    <Form.Control
-                      className={pwd ? (validPwd ? "valid" : "invalid") : ""}
-                      placeholder="Password"
-                      type="password"
-                      id="password"
-                      onChange={(e) => setPwd(e.target.value)}
-                      value={pwd}
-                      required
-                      aria-invalid={validPwd ? "false" : "true"}
-                      aria-describedby="pwdnote"
-                      onFocus={() => setPwdFocus(true)}
-                      onBlur={() => setPwdFocus(false)}
-                    />
-                  </FloatingLabel>
-                  <p
-                    id="pwdnote"
-                    className={
-                      pwdFocus && !validPwd ? "instructions" : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    8 to 24 characters.
-                    <br />
-                    Must include uppercase and lowercase letters, a number and a
-                    special character.
-                    <br />
-                    Allowed special characters:{" "}
-                    <span aria-label="exclamation mark">!</span>{" "}
-                    <span aria-label="at symbol">@</span>{" "}
-                    <span aria-label="hashtag">#</span>{" "}
-                    <span aria-label="dollar sign">$</span>{" "}
-                    <span aria-label="percent">%</span>
-                  </p>
-                  <br />
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    disabled={!validName || !validPwd ? true : false}
-                  >
-                    Sign In
-                  </Button>
-                </Form>
+                      {/* Password Field */}
+                      <FloatingLabel label="Password">
+                        <Form.Control
+                          className={
+                            pwd ? (validPwd ? "valid" : "invalid") : ""
+                          }
+                          placeholder="Password"
+                          type="password"
+                          id="password"
+                          onChange={(e) => setPwd(e.target.value)}
+                          value={pwd}
+                          required
+                          aria-invalid={validPwd ? "false" : "true"}
+                          aria-describedby="pwdnote"
+                          onFocus={() => setPwdFocus(true)}
+                          onBlur={() => setPwdFocus(false)}
+                        />
+                      </FloatingLabel>
+                      <p
+                        id="pwdnote"
+                        className={
+                          pwdFocus && !validPwd ? "instructions" : "offscreen"
+                        }
+                      >
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        8 to 24 characters.
+                        <br />
+                        Must include uppercase and lowercase letters, a number
+                        and a special character.
+                        <br />
+                        Allowed special characters:{" "}
+                        <span aria-label="exclamation mark">!</span>{" "}
+                        <span aria-label="at symbol">@</span>{" "}
+                        <span aria-label="hashtag">#</span>{" "}
+                        <span aria-label="dollar sign">$</span>{" "}
+                        <span aria-label="percent">%</span>
+                      </p>
+                      <br />
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        disabled={!validName || !validPwd ? true : false}
+                      >
+                        Sign In
+                      </Button>
+                    </Form>
 
-                <hr />
-                <p>
-                  Not already registered?
-                  <br />
-                  <span className="line">
-                    <a href="./register">Sign Up</a>
-                  </span>
-                </p>
+                    <hr />
+                    <p>
+                      Not already registered?
+                      <br />
+                      <span className="line">
+                        <a href="./register">Go to Registration Page</a>
+                      </span>
+                    </p>
+                  </>
+                )}
               </Card.Body>
             </Card>
           </Col>

@@ -13,15 +13,20 @@ export const FetchUser = async () => {
       });
       if (!response.ok) {
         console.log("Error getting user data,  status", response.status);
-        console.log(localStorage.getItem("token"));
-        console.log(localStorage.getItem("username"));
-
-        return { status: response.status };
+        // console.log(localStorage.getItem("token"));
+        // console.log(localStorage.getItem("username"));
+        return {
+          errMessage:
+            "Error getting user data,  status code: " + response.status,
+        };
       }
 
       const data = await response.json();
       console.log(data);
-      return data; // return user data
+
+      // return user data
+      return data;
+      //
     } catch (error) {
       console.log("Error getting user data: Error in getUserData fetch", error);
       return {
