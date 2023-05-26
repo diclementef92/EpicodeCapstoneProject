@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.stayhealth.auth.entity.User;
+import com.project.stayhealth.auth.entity.UserDTO;
 import com.project.stayhealth.auth.entity.UserToUpdateDTO;
 import com.project.stayhealth.business.service.UserService;
 
@@ -47,8 +48,8 @@ public class UsersController {
 
 	@GetMapping("/{username}")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
-	public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-		return new ResponseEntity<User>(userService.findByUsername(username), HttpStatus.OK);
+	public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username) {
+		return new ResponseEntity<UserDTO>(userService.findByUsername(username), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

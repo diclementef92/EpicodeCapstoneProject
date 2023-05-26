@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.project.stayhealth.auth.entity.User;
+import com.project.stayhealth.auth.entity.UserDTO;
 import com.project.stayhealth.auth.entity.UserToUpdateDTO;
 import com.project.stayhealth.auth.exception.MyAPIException;
 import com.project.stayhealth.auth.exception.ResourceNotFoundException;
@@ -30,9 +31,14 @@ public class UserService {
 		return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 	}
 
-	public User findByUsername(String username) throws ResourceNotFoundException {
-		return repo.findByUsername(username)
+	public UserDTO findByUsername(String username) throws ResourceNotFoundException {
+		User user = repo.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+		return UserDTO.builder().firstName(user.getFirstName()).lastName(user.getLastName())
+				.birthDay(user.getBirthDay()).weightKg(user.getWeightKg()).heightCm(user.getHeightCm())
+				.gender(user.getGender()).physicalActivityLevel(user.getPhysicalActivityLevel())
+				.physicallyActive(user.isPhysicallyActive()).dailyCaloricNeeds(user.getDailyCaloricNeeds())
+				.username(user.getUsername()).email(user.getEmail()).build();
 	}
 
 	public User createUser(User u) {
