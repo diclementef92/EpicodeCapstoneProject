@@ -11,7 +11,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SignIn } from "../hooks/FechAuthentication";
 import { FetchUser } from "../hooks/FetchUser";
 
@@ -41,9 +41,16 @@ const Login = () => {
   const [responseMsg, setResponseMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
+  const userDto = useSelector((state) => state.userDto);
+
   useEffect(() => {
     // at beginning focus on username field
     if (userRef) userRef?.current.focus();
+    if (userDto.username) {
+      //if user is already logged
+      setSuccess(true);
+      setResponseMsg("user already logged in");
+    }
   }, []);
 
   useEffect(() => {
@@ -110,7 +117,8 @@ const Login = () => {
               {success ? (
                 <>
                   <Card.Title>{responseMsg}</Card.Title>
-                  <Link to={"./dashboard"}>Go to DashBoard</Link>
+                  <br />
+                  <Button href={"./dashboard"}>Go to DashBoard</Button>
                 </>
               ) : (
                 <>

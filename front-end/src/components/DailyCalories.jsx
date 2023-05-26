@@ -11,7 +11,7 @@ const DailyCalories = (props) => {
   useEffect(() => {}, []);
 
   return (
-    <Container className="d-flex justify-content-sm-center mt-4">
+    <Container>
       <Card style={{ width: "18rem" }}>
         <Card.Body>
           <Card.Title>Daily Caloric Need</Card.Title>
