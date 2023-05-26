@@ -228,6 +228,7 @@ const Register = () => {
                       className={
                         matchPwd ? (validMatch ? "valid" : "invalid") : ""
                       }
+                      placeholder="confirm password"
                       type="password"
                       id="confirm_pwd"
                       onChange={(e) => setMatchPwd(e.target.value)}

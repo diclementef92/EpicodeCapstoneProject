@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+
 const BASEURL = "http://localhost:8080/api/users/";
 
 export const FetchUser = async () => {
@@ -13,8 +15,7 @@ export const FetchUser = async () => {
       });
       if (!response.ok) {
         console.log("Error getting user data,  status", response.status);
-        // console.log(localStorage.getItem("token"));
-        // console.log(localStorage.getItem("username"));
+
         return {
           errMessage:
             "Error getting user data,  status code: " + response.status,

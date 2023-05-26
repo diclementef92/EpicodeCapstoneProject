@@ -31,7 +31,7 @@ export const SignIn = async (props) => {
   try {
     const response = await fetch(AuthURL + "/signin", {
       method: "POST",
-      body: JSON.stringify({ ...props, roles: ["ROLE_USER"] }),
+      body: JSON.stringify({ ...props }),
       headers: myHeaders,
       redirect: "follow",
     });
