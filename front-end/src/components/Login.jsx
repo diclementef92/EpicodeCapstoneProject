@@ -103,8 +103,8 @@ const Login = () => {
           type: "SET_USER",
           payload: userDto,
         });
+        setSuccess(true);
       }
-      setSuccess(true);
     }
   };
 

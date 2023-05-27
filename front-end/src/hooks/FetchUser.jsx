@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
 
-const BASEURL = "http://localhost:8080/api/users/";
+const BASEURL = `http://localhost:${
+  process.env.REACT_APP_SERVER_PORT ? process.env.REACT_APP_SERVER_PORT : 8080
+}/api/users/`;
 
 export const FetchUser = async () => {
   if (localStorage.getItem("username") && localStorage.getItem("token")) {

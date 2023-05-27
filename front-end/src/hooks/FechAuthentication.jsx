@@ -1,4 +1,6 @@
-const AuthURL = "http://localhost:8080/api/auth";
+const AuthURL = `http://localhost:${
+  process.env.REACT_APP_SERVER_PORT ? process.env.REACT_APP_SERVER_PORT : 8080
+}/api/auth`;
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
