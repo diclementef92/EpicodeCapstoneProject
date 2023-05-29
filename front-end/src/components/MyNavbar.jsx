@@ -46,16 +46,16 @@ const MyNavbar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav>
-              <NavLink to="./dashboard" activeClassName="active">
+              <NavLink href="./dashboard" activeClassName="active">
                 DashBoard
               </NavLink>
-              <NavLink to="./myprofile" activeClassName="active">
+              <NavLink href="./myprofile" activeClassName="active">
                 My Profile
               </NavLink>
-              <NavLink to="./weights" activeClassName="active">
+              <NavLink href="./weights" activeClassName="active">
                 Weight Measurements
               </NavLink>
-              <NavLink to="./foods" activeClassName="active">
+              <NavLink href="./foods" activeClassName="active">
                 Food calories
               </NavLink>
             </Nav>{" "}
