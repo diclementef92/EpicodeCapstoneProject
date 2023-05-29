@@ -95,7 +95,7 @@ const Login = () => {
       console.log(res);
 
       //save user to redux
-      const userDto = await FetchUser();
+      const userDto = await FetchUser(res.username);
       console.log(userDto);
       if (userDto.errMessage) {
         setErrMsg(userDto.errMessage);

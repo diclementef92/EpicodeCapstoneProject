@@ -1,13 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const BASEURL = `http://localhost:${
   process.env.REACT_APP_SERVER_PORT ? process.env.REACT_APP_SERVER_PORT : 8080
 }/api/users/`;
 
-export const FetchUser = async () => {
-  if (localStorage.getItem("username") && localStorage.getItem("token")) {
+export const FetchUser = async (username) => {
+  if (localStorage.getItem("token")) {
     try {
-      const response = await fetch(BASEURL + localStorage.getItem("username"), {
+      const response = await fetch(BASEURL + username, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -41,10 +41,10 @@ export const FetchUser = async () => {
   }
 };
 
-export const UpdateUser = async (userToUpdateDTO) => {
-  if (localStorage.getItem("username") && localStorage.getItem("token")) {
+export const UpdateUser = async (username, userToUpdateDTO) => {
+  if (localStorage.getItem("token")) {
     try {
-      const response = await fetch(BASEURL + localStorage.getItem("username"), {
+      const response = await fetch(BASEURL + username, {
         method: "PUT",
         body: JSON.stringify(userToUpdateDTO),
         headers: {

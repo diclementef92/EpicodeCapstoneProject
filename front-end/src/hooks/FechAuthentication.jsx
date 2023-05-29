@@ -47,7 +47,6 @@ export const SignIn = async (props) => {
 
     // process.env.REACT_APP_MYTOKEN = data.accessToken; //save token
     // process.env.REACT_APP_MYUSERNAME = data.username; //save token
-    localStorage.setItem("username", data.username);
     localStorage.setItem("token", data.accessToken);
 
     return data; // return success string message
