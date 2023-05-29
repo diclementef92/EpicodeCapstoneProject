@@ -2,6 +2,7 @@ import {
   Container,
   Image,
   Nav,
+  NavLink,
   Navbar,
   OverlayTrigger,
   Tooltip,
@@ -9,10 +10,10 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { BiLogOut } from "react-icons/bi";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import "../assets/Navbar.css";
 
 const MyNavbar = () => {
   const userDto = useSelector((state) => state.userDto);
@@ -45,25 +46,33 @@ const MyNavbar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav>
-              <Nav.Link href="./dashboard">DashBoard</Nav.Link>
-              <Nav.Link href="./myprofile">My Profile</Nav.Link>
-              <Nav.Link href="./weights">Weight Measurements</Nav.Link>
-              <Nav.Link href="./foods">Food calories</Nav.Link>
+              <NavLink to="./dashboard" activeClassName="active">
+                DashBoard
+              </NavLink>
+              <NavLink to="./myprofile" activeClassName="active">
+                My Profile
+              </NavLink>
+              <NavLink to="./weights" activeClassName="active">
+                Weight Measurements
+              </NavLink>
+              <NavLink to="./foods" activeClassName="active">
+                Food calories
+              </NavLink>
             </Nav>{" "}
+            <div>
+              {userDto.username}{" "}
+              <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+              >
+                <FontAwesomeIcon
+                  icon={faRightFromBracket}
+                  onClick={handleLogOut}
+                />
+              </OverlayTrigger>
+            </div>
           </Navbar.Collapse>
-          <div>
-            {userDto.username}{" "}
-            <OverlayTrigger
-              placement="right"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip}
-            >
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                onClick={handleLogOut}
-              />
-            </OverlayTrigger>
-          </div>
         </Container>
       </Navbar>
     </>
