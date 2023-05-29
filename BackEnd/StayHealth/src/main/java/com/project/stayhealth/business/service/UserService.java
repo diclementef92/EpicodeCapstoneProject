@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.stayhealth.auth.entity.User;
@@ -23,6 +24,8 @@ public class UserService {
 	@Autowired
 	private UserRepository repo;
 
+	private PasswordEncoder encoder;
+
 	public List<User> findAll() throws EntityNotFoundException {
 		return repo.findAll();
 	}
@@ -34,22 +37,20 @@ public class UserService {
 	public UserDTO findByUsername(String username) throws ResourceNotFoundException {
 		User user = repo.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-		return UserDTO.builder().firstName(user.getFirstName()).lastName(user.getLastName())
-				.birthDay(user.getBirthDay()).weightKg(user.getWeightKg()).heightCm(user.getHeightCm())
-				.gender(user.getGender()).physicalActivityLevel(user.getPhysicalActivityLevel())
-				.physicallyActive(user.isPhysicallyActive()).dailyCaloricNeeds(user.getDailyCaloricNeeds())
-				.username(user.getUsername()).email(user.getEmail()).build();
+		return userDtoFrom(user);
 	}
 
 	public User createUser(User u) {
 		if (repo.findByUsernameOrEmail(u.getUsername(), u.getEmail()).isPresent())
 			throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");
-//		log.info("user " + u.toString());
+
 		return repo.save(u);
 	}
 
-	public User updateUser(Long id, UserToUpdateDTO userDto) throws ResourceNotFoundException, MyAPIException {
-		User userToUpdate = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+	public UserDTO updateUser(String username, UserToUpdateDTO userDto)
+			throws ResourceNotFoundException, MyAPIException {
+		User userToUpdate = repo.findByUsername(username)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
 		// verify if exist another user with same username or email
 		Optional<User> userFound = repo.findByUsernameOrEmail(userDto.getUsername(), userDto.getEmail());
@@ -57,30 +58,32 @@ public class UserService {
 			// update only fields present in Dto body
 			if (userDto.getFirstName() != null)
 				userToUpdate.setFirstName(userDto.getFirstName());
+
 			if (userDto.getLastName() != null)
 				userToUpdate.setLastName(userDto.getLastName());
+
 			if (userDto.getBirthDay() != null)
 				userToUpdate.setBirthDay(userDto.getBirthDay());
+
+			if (userDto.getHeightCm() != null)
+				userToUpdate.setHeightCm(userDto.getHeightCm());
 
 			if (userDto.getPhysicalActivityLevel() != null)
 				userToUpdate.setPhysicalActivityLevel(userDto.getPhysicalActivityLevel());
 
 			if (userDto.getPhysicallyActive() != null)
-				if (userDto.getPhysicallyActive().equalsIgnoreCase("true"))
-					userToUpdate.setPhysicallyActive(true);
-				else
-					userToUpdate.setPhysicallyActive(false);
+				if (userDto.getPhysicallyActive())
+					userToUpdate.setPhysicallyActive(userDto.getPhysicallyActive().booleanValue());
+
 			if (userDto.getUsername() != null)
 				userToUpdate.setUsername(userDto.getUsername());
 
 			if (userDto.getEmail() != null)
 				userToUpdate.setEmail(userDto.getEmail());
 
-			if (userDto.getPassword() != null)
-				userToUpdate.setPassword(userDto.getPassword());
-
 			userToUpdate.calculateDailyCaloricNeeds();
-			return repo.save(userToUpdate);
+
+			return userDtoFrom(repo.save(userToUpdate));
 		} else
 			throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");
 	}
@@ -89,4 +92,11 @@ public class UserService {
 		repo.delete(findById(id));
 	}
 
+	private UserDTO userDtoFrom(User user) {
+		return UserDTO.builder().firstName(user.getFirstName()).lastName(user.getLastName())
+				.birthDay(user.getBirthDay()).weightKg(user.getWeightKg()).heightCm(user.getHeightCm())
+				.gender(user.getGender()).physicalActivityLevel(user.getPhysicalActivityLevel())
+				.physicallyActive(user.isPhysicallyActive()).dailyCaloricNeeds(user.getDailyCaloricNeeds())
+				.username(user.getUsername()).email(user.getEmail()).build();
+	}
 }

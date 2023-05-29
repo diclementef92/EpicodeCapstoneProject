@@ -1,11 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faInfoCircle,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
-import "../assets/Register.css";
 import { SignUp } from "../hooks/FechAuthentication";
 import {
   Button,
@@ -16,6 +11,7 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
+import "../assets/SignForm.css";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -126,8 +122,8 @@ const Register = () => {
       ) : (
         <Row>
           <Col>
-            <Card style={{ width: "18rem" }}>
-              <Card.Body className="text-center">
+            <Card className="section-login">
+              <Card.Body>
                 <Card.Title>Register</Card.Title>
                 <p
                   ref={errRef}
@@ -282,10 +278,37 @@ const Register = () => {
                     required
                   />
                   <br />
+                  {/* Gender field*/}
+                  <div>
+                    <input
+                      type="radio"
+                      id="male"
+                      name="gender"
+                      value="MALE"
+                      required
+                      onClick={(e) => {
+                        registerDto.gender = e.target.value;
+                      }}
+                    />
+                    <label htmlFor="male">male</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="female"
+                      name="gender"
+                      value="FEMALE"
+                      required
+                      onClick={(e) => {
+                        registerDto.gender = e.target.value;
+                      }}
+                    />
+                    <label htmlFor="female">female</label>
+                  </div>
+                  <br />
                   {/* initial Weight Kg field*/}
                   <label htmlFor="initialWeightKg">Actual Weight (Kg):</label>
                   <div>
-                    {" "}
                     <input
                       type="number"
                       id="initialWeightKg"
@@ -316,33 +339,7 @@ const Register = () => {
                     />
                     <span className="validity"></span>
                   </div>
-                  {/* Gender field*/}
-                  <div>
-                    <input
-                      type="radio"
-                      id="male"
-                      name="gender"
-                      value="MALE"
-                      required
-                      onClick={(e) => {
-                        registerDto.gender = e.target.value;
-                      }}
-                    />
-                    <label htmlFor="male">male</label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="female"
-                      name="gender"
-                      value="FEMALE"
-                      required
-                      onClick={(e) => {
-                        registerDto.gender = e.target.value;
-                      }}
-                    />
-                    <label htmlFor="female">female</label>
-                  </div>
+
                   <br />
 
                   {/* physicalActivityLevel field*/}

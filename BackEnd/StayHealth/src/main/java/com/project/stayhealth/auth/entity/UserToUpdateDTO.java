@@ -17,9 +17,11 @@ public class UserToUpdateDTO {
 	private String lastName;
 	private LocalDate birthDay;
 
+	private Double heightCm;
+
 	private EPhysicalActivityLevel physicalActivityLevel;
 
-	private String physicallyActive;
+	private Boolean physicallyActive;
 
 	private String username;
 	private String email;

@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { SignIn } from "../hooks/FechAuthentication";
 import { FetchUser } from "../hooks/FetchUser";
+import "../assets/SignForm.css";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -112,7 +113,7 @@ const Login = () => {
     <Container className="d-flex justify-content-sm-center mt-4">
       <Row className="justify-content-sm-center mt-4">
         <Col>
-          <Card style={{ width: "18rem" }}>
+          <Card className="section-login">
             <Card.Body className="text-center">
               {success ? (
                 <>

@@ -52,9 +52,9 @@ public class UsersController {
 		return new ResponseEntity<UserDTO>(userService.findByUsername(username), HttpStatus.OK);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/{username}")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
-	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserToUpdateDTO user) {
-		return new ResponseEntity<User>(userService.updateUser(id, user), HttpStatus.OK);
+	public ResponseEntity<UserDTO> updateUser(@PathVariable String username, @RequestBody UserToUpdateDTO user) {
+		return new ResponseEntity<UserDTO>(userService.updateUser(username, user), HttpStatus.OK);
 	}
 }

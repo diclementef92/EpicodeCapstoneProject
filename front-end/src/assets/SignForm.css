@@ -3,14 +3,15 @@ form {
   flex-direction: column;
 }
 
-section {
-  width: 100%;
-  max-width: 420px;
-  min-height: 400px;
+.section-login {
+  width: 18rem;
+  /* max-width: 420px; */
+  /* min-height: 400px; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 1rem;
+  box-shadow: 2px 1px 5px 0px;
 }
 
 .instructions {

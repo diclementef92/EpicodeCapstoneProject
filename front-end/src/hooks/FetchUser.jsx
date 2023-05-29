@@ -40,3 +40,40 @@ export const FetchUser = async () => {
     return { errMessage: "user not logged in" };
   }
 };
+
+export const UpdateUser = async (userToUpdateDTO) => {
+  if (localStorage.getItem("username") && localStorage.getItem("token")) {
+    try {
+      const response = await fetch(BASEURL + localStorage.getItem("username"), {
+        method: "PUT",
+        body: JSON.stringify(userToUpdateDTO),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        redirect: "manual",
+      });
+      if (!response.ok) {
+        console.log("Error updating user,  status", response.status);
+
+        return {
+          errMessage: "Error updating user,  status code: " + response.status,
+        };
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // return user data
+      return data;
+      //
+    } catch (error) {
+      console.log("Error updating user: Error in UpdateUser fetch", error);
+      return {
+        errMessage: "Error updating user: Error in UpdateUser fetch",
+      };
+    }
+  } else {
+    return { errMessage: "user not logged in" };
+  }
+};

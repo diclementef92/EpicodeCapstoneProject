@@ -50,7 +50,8 @@ const MyNavbar = () => {
             <Nav>
               <Nav.Link href="./dashboard">DashBoard</Nav.Link>
               <Nav.Link href="./myprofile">My Profile</Nav.Link>
-              <Nav.Link href="./weight">Weight Measurements</Nav.Link>
+              <Nav.Link href="./weights">Weight Measurements</Nav.Link>
+              <Nav.Link href="./foods">Food calories</Nav.Link>
             </Nav>{" "}
           </Navbar.Collapse>
           <div>
