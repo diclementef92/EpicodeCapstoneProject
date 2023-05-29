@@ -5,8 +5,13 @@
   color: grey;
   transition: all 200ms;
 }
-.nav-link:hover {
+.nav-link.nav-link:hover {
   color: green;
+  font-weight: bold;
   transform: scale(1.1);
-  /* font-weight: bold; */
+}
+
+.nav-link.active {
+  color: green;
+  font-weight: bold;
 }

@@ -2,13 +2,12 @@ import {
   Container,
   Image,
   Nav,
-  NavLink,
   Navbar,
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -49,18 +48,31 @@ const MyNavbar = () => {
             id="responsive-navbar-nav"
           >
             <Nav>
-              <NavLink href="./dashboard" activeClassName="active">
+              {" "}
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active-link"
+                to="/dashboard"
+              >
                 DashBoard
-              </NavLink>
-              <NavLink href="./myprofile" activeClassName="active">
+              </Nav.Link>
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active-link"
+                to="/myprofile"
+              >
                 My Profile
-              </NavLink>
-              <NavLink href="./weights" activeClassName="active">
+              </Nav.Link>
+              <Nav.Link
+                as={NavLink}
+                activeClassName="active-link"
+                to="/weights"
+              >
                 Weight Measurements
-              </NavLink>
-              <NavLink href="./foods" activeClassName="active">
+              </Nav.Link>
+              <Nav.Link as={NavLink} activeClassName="active-link" to="/foods">
                 Food calories
-              </NavLink>
+              </Nav.Link>
             </Nav>{" "}
             <div>
               {userDto.username}{" "}
