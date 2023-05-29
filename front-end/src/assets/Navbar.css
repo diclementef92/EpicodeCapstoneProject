@@ -5,7 +5,7 @@
   color: grey;
   transition: all 200ms;
 }
-.nav-link.nav-link:hover {
+.nav-link:hover {
   color: green;
   font-weight: bold;
   transform: scale(1.1);
