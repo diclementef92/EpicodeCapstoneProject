@@ -1,0 +1,70 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-login {
+  width: 18rem;
+  /* max-width: 420px; */
+  /* min-height: 400px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+  box-shadow: 2px 1px 5px 0px;
+}
+.section-login .icon-editable {
+  cursor: pointer;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  border-color: rgb(0, 221, 18);
+  border-width: 0.2em;
+}
+
+.invalid {
+  border-color: red;
+  border-width: 0.2em;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* for validation weight */
+input:invalid + span::after {
+  content: "✖";
+  padding-left: 5px;
+}
+
+input:valid + span::after {
+  content: "✓";
+  padding-left: 5px;
+}

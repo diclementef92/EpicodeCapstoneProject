@@ -1,21 +1,18 @@
-import { useEffect, useState } from "react";
 import {
-  Button,
-  Card,
   Container,
   Image,
   Nav,
-  NavLink,
   Navbar,
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { FetchUser } from "../hooks/FetchUser";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import DailyCalories from "./DailyCalories";
 import { BiLogOut } from "react-icons/bi";
 import logo from "../assets/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const MyNavbar = () => {
   const userDto = useSelector((state) => state.userDto);
@@ -39,14 +36,14 @@ const MyNavbar = () => {
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar expand="lg" bg="light" variant="light">
         <Container>
           <Navbar.Brand href="./">
             <Image src={logo} width={40} className="me-4" />
             StayHealth
           </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="d-flex justify-content-between">
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav>
               <Nav.Link href="./dashboard">DashBoard</Nav.Link>
               <Nav.Link href="./myprofile">My Profile</Nav.Link>
@@ -61,7 +58,10 @@ const MyNavbar = () => {
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip}
             >
-              <BiLogOut onClick={handleLogOut} style={{ cursor: "pointer" }} />
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                onClick={handleLogOut}
+              />
             </OverlayTrigger>
           </div>
         </Container>

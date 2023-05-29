@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faInfoCircle,
+  faPencil,
+  faArrowRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import { SignUp } from "../hooks/FechAuthentication";
 import {
@@ -11,7 +15,8 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
-import "../assets/SignForm.css";
+import "../assets/Profile.css";
+
 import MyNavbar from "./MyNavbar";
 import { UpdateUser } from "../hooks/FetchUser";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +37,8 @@ const userToUpdateDTO = {
 const Profile = () => {
   const userDto = useSelector((state) => state.userDto);
   const dispatch = useDispatch();
+
+  const [editable, setEditable] = useState(false);
 
   const userRef = useRef();
   const errRef = useRef();
@@ -65,6 +72,10 @@ const Profile = () => {
     // at beginning focus on username field
     if (userRef) userRef?.current.focus();
   }, []);
+
+  const refreshPage = () => {
+    window.location.reload(false);
+  };
 
   useEffect(() => {
     setValidName(USER_REGEX.test(user)); // verify the username with regex
@@ -117,7 +128,24 @@ const Profile = () => {
             <Col>
               <Card className="section-login">
                 <Card.Body>
-                  <Card.Title>Update Profile</Card.Title>
+                  <Card.Title>
+                    My Profile{" "}
+                    <FontAwesomeIcon
+                      icon={faPencil}
+                      className="icon-editable"
+                      visibility={editable ? "hidden" : "visible"}
+                      onClick={() => setEditable(!editable)}
+                    />
+                    <FontAwesomeIcon
+                      icon={faArrowRotateRight}
+                      className="icon-editable"
+                      visibility={editable ? "visible" : "hidden"}
+                      onClick={() => {
+                        setEditable(!editable);
+                        refreshPage();
+                      }}
+                    />
+                  </Card.Title>
                   <p
                     ref={errRef}
                     className={errMsg ? "errmsg" : "offscreen"}
@@ -132,6 +160,7 @@ const Profile = () => {
                         className={
                           user ? (validName ? "valid" : "invalid") : ""
                         }
+                        disabled={!editable}
                         placeholder="Username"
                         type="text"
                         id="username"
@@ -170,6 +199,7 @@ const Profile = () => {
                         placeholder="Email"
                         type="email"
                         id="email"
+                        disabled={!editable}
                         autoComplete="off"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
@@ -185,6 +215,7 @@ const Profile = () => {
                     <input
                       type="text"
                       id="firstName"
+                      disabled={!editable}
                       autoComplete="off"
                       onChange={(e) => setFirstName(e.target.value)}
                       value={firstName}
@@ -195,6 +226,7 @@ const Profile = () => {
                     <input
                       type="text"
                       id="lastName"
+                      disabled={!editable}
                       autoComplete="off"
                       onChange={(e) => setLastName(e.target.value)}
                       value={lastName}
@@ -206,6 +238,7 @@ const Profile = () => {
                       type="date"
                       id="birthDay"
                       autoComplete="off"
+                      disabled={!editable}
                       onChange={(e) => setBirthDay(e.target.value)}
                       value={birthDay}
                       required
@@ -221,6 +254,7 @@ const Profile = () => {
                         type="number"
                         id="heightCm"
                         autoComplete="off"
+                        disabled={!editable}
                         onChange={(e) => setHeightCm(e.target.value)}
                         value={heightCm}
                         required
@@ -242,6 +276,7 @@ const Profile = () => {
                         id="low"
                         name="physicalActivityLevel"
                         value="LOW"
+                        disabled={!editable}
                         defaultChecked={physicalActivityLevel == "LOW"}
                         required
                         onClick={(e) => {
@@ -256,6 +291,7 @@ const Profile = () => {
                         id="medium"
                         name="physicalActivityLevel"
                         value="MEDIUM"
+                        disabled={!editable}
                         defaultChecked={physicalActivityLevel == "MEDIUM"}
                         required
                         onClick={(e) => {
@@ -271,6 +307,7 @@ const Profile = () => {
                         id="high"
                         name="physicalActivityLevel"
                         value="HIGH"
+                        disabled={!editable}
                         defaultChecked={physicalActivityLevel == "HIGH"}
                         required
                         onClick={(e) => {
@@ -287,6 +324,7 @@ const Profile = () => {
                         type="checkbox"
                         id="physicallyActive"
                         name="physicallyActive"
+                        disabled={!editable}
                         defaultChecked={physicallyActive == true}
                         onClick={() => {
                           setPhysicallyActive(
@@ -302,19 +340,11 @@ const Profile = () => {
                     <Button
                       type="submit"
                       variant="primary"
-                      disabled={!validName ? true : false}
+                      disabled={!validName || !editable ? true : false}
                     >
-                      Sign Up
+                      Save
                     </Button>
                   </Form>
-                  <hr />
-                  <p>
-                    Already registered?
-                    <br />
-                    <span className="line">
-                      <a href="./login">Go to Login Page</a>
-                    </span>
-                  </p>
                 </Card.Body>
               </Card>
             </Col>
