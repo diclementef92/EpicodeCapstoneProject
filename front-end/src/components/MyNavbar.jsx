@@ -39,12 +39,15 @@ const MyNavbar = () => {
     <>
       <Navbar expand="lg" bg="light" variant="light">
         <Container>
-          <Navbar.Brand href="./">
+          <Navbar.Brand className="d-flex align-items-center" href="./">
             <Image src={logo} width={40} className="me-4" />
-            StayHealth
+            <span className="brand-name">StayHealth</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
+          <Navbar.Collapse
+            className="justify-content-between"
+            id="responsive-navbar-nav"
+          >
             <Nav>
               <NavLink href="./dashboard" activeClassName="active">
                 DashBoard

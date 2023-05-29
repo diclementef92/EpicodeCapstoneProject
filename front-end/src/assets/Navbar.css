@@ -1,9 +1,12 @@
+.brand-name {
+  /* font-size: 20px; */
+}
 .nav-link {
   color: grey;
   transition: all 200ms;
 }
 .nav-link:hover {
   color: green;
-  font-weight: bold;
-  font-size: 1.2em;
+  transform: scale(1.1);
+  /* font-weight: bold; */
 }
