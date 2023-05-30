@@ -2,6 +2,7 @@ package com.project.stayhealth.business.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.stayhealth.auth.entity.User;
 
 import jakarta.persistence.Column;
@@ -28,6 +29,7 @@ public class WeightMeasurement {
 	private Long id;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 

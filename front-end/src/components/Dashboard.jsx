@@ -21,11 +21,13 @@ const Dashboard = () => {
     <>
       <MyNavbar />
       <Container className="mt-4">
-        <Card>
+        <Card className="p-4">
           <Card.Title>
             <span className="total-calories">{userDto.dailyCaloricNeeds}</span>
             <span className="fs-1"> Kcal</span>
+            <p>My Daily Caloric Need 😊</p>
           </Card.Title>
+          <Card.Body></Card.Body>
         </Card>
       </Container>
     </>

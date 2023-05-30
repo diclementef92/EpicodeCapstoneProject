@@ -105,7 +105,7 @@ const Profile = () => {
       setErrMsg(responseUser.errMessage);
       setSuccess(false);
     } else {
-      setResponseMsg("User Updated");
+      setResponseMsg("Profile Successful Updated! 👍");
       dispatch({
         type: "SET_USER",
         payload: responseUser,

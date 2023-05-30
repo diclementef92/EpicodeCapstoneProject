@@ -48,17 +48,17 @@ public class WeightMeasurementController {
 		return new ResponseEntity<String>(service.removeWeightMeasurement(idMeasurement), HttpStatus.OK);
 	}
 
-	@GetMapping("/user/{idUser}")
+	@GetMapping("/user/{username}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<List<WeightMeasurement>> findByUserId(@PathVariable Long idUser) {
-		return new ResponseEntity<List<WeightMeasurement>>(service.findByUserId(idUser), HttpStatus.OK);
+	public ResponseEntity<List<WeightMeasurement>> findByUsername(@PathVariable String username) {
+		return new ResponseEntity<List<WeightMeasurement>>(service.findByUsername(username), HttpStatus.OK);
 	}
 
-	@PostMapping("/user/{idUser}")
+	@PostMapping("/user/{username}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<WeightMeasurement> addWeightMeasurement(@PathVariable Long idUser,
+	public ResponseEntity<WeightMeasurement> addWeightMeasurement(@PathVariable String username,
 			@RequestBody WeightMeasurement weight) {
-		return new ResponseEntity<WeightMeasurement>(service.addWeightMeasurement(idUser, weight), HttpStatus.OK);
+		return new ResponseEntity<WeightMeasurement>(service.addWeightMeasurement(username, weight), HttpStatus.OK);
 	}
 
 	@GetMapping("/ordered-by-date/{idUser}")

@@ -29,9 +29,16 @@ public class WeightMeasurementService {
 				.orElseThrow(() -> new ResourceNotFoundException("WeightMeasurement for user", "id", id));
 	}
 
-	public WeightMeasurement addWeightMeasurement(Long idUSer, WeightMeasurement w) {
-		User userFound = userRepo.findById(idUSer)
-				.orElseThrow(() -> new ResourceNotFoundException("user", "id", idUSer));
+	public List<WeightMeasurement> findByUsername(String username) {
+		if (weightRepo.findByUsername(username).isPresent())
+			return weightRepo.findByUsername(username).get();
+		else
+			throw new ResourceNotFoundException("WeightMeasurement", "username", username);
+	}
+
+	public WeightMeasurement addWeightMeasurement(String username, WeightMeasurement w) {
+		User userFound = userRepo.findByUsername(username)
+				.orElseThrow(() -> new ResourceNotFoundException("user", "username", username));
 
 		w.setUser(userFound);
 		return weightRepo.save(w);

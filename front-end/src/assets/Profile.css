@@ -4,9 +4,9 @@ form {
 }
 
 .section-login {
-  width: 18rem;
-  /* max-width: 420px; */
-  /* min-height: 400px; */
+  width: 30rem;
+  /* max-width: 420px;
+  min-height: 400px; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
