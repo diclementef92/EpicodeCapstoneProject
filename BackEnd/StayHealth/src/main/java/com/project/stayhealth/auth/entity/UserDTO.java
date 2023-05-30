@@ -27,6 +27,7 @@ public class UserDTO {
 	private boolean physicallyActive;
 
 	private Double dailyCaloricNeeds;
+	private Double idealWeight;
 
 	private String username;
 	private String email;

@@ -82,6 +82,7 @@ public class UserService {
 				userToUpdate.setEmail(userDto.getEmail());
 
 			userToUpdate.calculateDailyCaloricNeeds();
+			userToUpdate.calculateIdealWeight();
 
 			return userDtoFrom(repo.save(userToUpdate));
 		} else

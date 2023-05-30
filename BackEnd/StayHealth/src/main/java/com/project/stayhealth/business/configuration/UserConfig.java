@@ -51,6 +51,7 @@ public class UserConfig {
 				.password(fake.funnyName().name().replace(" ", "") + "!" + fake.number().randomNumber()).build();
 
 		newUser.calculateDailyCaloricNeeds();
+		newUser.calculateIdealWeight();
 
 		return newUser;
 

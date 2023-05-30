@@ -24,90 +24,84 @@ import com.project.stayhealth.auth.security.JwtTokenProvider;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenProvider jwtTokenProvider;
+	private AuthenticationManager authenticationManager;
+	private UserRepository userRepository;
+	private RoleRepository roleRepository;
+	private PasswordEncoder passwordEncoder;
+	private JwtTokenProvider jwtTokenProvider;
 
+	public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository,
+			RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
+		this.authenticationManager = authenticationManager;
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.passwordEncoder = passwordEncoder;
+		this.jwtTokenProvider = jwtTokenProvider;
+	}
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager,
-                           UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder,
-                           JwtTokenProvider jwtTokenProvider) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+	@Override
+	public String login(LoginDto loginDto) {
 
-    @Override
-    public String login(LoginDto loginDto) {
-        
-    	Authentication authentication = authenticationManager.authenticate(
-        		new UsernamePasswordAuthenticationToken(
-        				loginDto.getUsername(), loginDto.getPassword()
-        		)
-        ); 
-    	
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 
-        String token = jwtTokenProvider.generateToken(authentication);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return token;
-    }
+		String token = jwtTokenProvider.generateToken(authentication);
 
-    @Override
-    public String register(RegisterDto registerDto) {
+		return token;
+	}
 
-        // add check for username exists in database
-        if(userRepository.existsByUsername(registerDto.getUsername())){
-            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
-        }
+	@Override
+	public String register(RegisterDto registerDto) {
 
-        // add check for email exists in database
-        if(userRepository.existsByEmail(registerDto.getEmail())){
-            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
-        }
+		// add check for username exists in database
+		if (userRepository.existsByUsername(registerDto.getUsername())) {
+			throw new MyAPIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
+		}
 
-        User user = new User();
-        user.setFirstName(registerDto.getFirstName());
-        user.setLastName(registerDto.getLastName());
-        user.setUsername(registerDto.getUsername());
-        user.setBirthDay(registerDto.getBirthDay());
-        user.setGender(registerDto.getGender());
-        user.setHeightCm(registerDto.getHeightCm());
-        user.setWeightKg(registerDto.getInitialWeightKg());
-        user.setPhysicalActivityLevel(registerDto.getPhysicalActivityLevel());
-        user.setPhysicallyActive(registerDto.isPhysicallyActive());
-        user.setEmail(registerDto.getEmail());
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.calculateDailyCaloricNeeds();
-        Set<Role> roles = new HashSet<>();
-        
-        if(registerDto.getRoles() != null) {
-	        registerDto.getRoles().forEach(role -> {
-	        	Role userRole = roleRepository.findByRoleName(getRole(role)).get();
-	        	roles.add(userRole);
-	        });
-        } else {
-        	Role userRole = roleRepository.findByRoleName(ERole.ROLE_USER).get();
-        	roles.add(userRole);
-        }
-        
-        user.setRoles(roles);
-        System.out.println(user);
-        userRepository.save(user);
+		// add check for email exists in database
+		if (userRepository.existsByEmail(registerDto.getEmail())) {
+			throw new MyAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
+		}
 
-        return "User registered successfully!.";
-    }
-    
-    public ERole getRole(String role) {
-    	if(role.equals("ROLE_ADMIN")) 
-    		return ERole.ROLE_ADMIN;
-    	return ERole.ROLE_USER;
-    }
-    
+		User user = new User();
+		user.setFirstName(registerDto.getFirstName());
+		user.setLastName(registerDto.getLastName());
+		user.setUsername(registerDto.getUsername());
+		user.setBirthDay(registerDto.getBirthDay());
+		user.setGender(registerDto.getGender());
+		user.setHeightCm(registerDto.getHeightCm());
+		user.setWeightKg(registerDto.getInitialWeightKg());
+		user.setPhysicalActivityLevel(registerDto.getPhysicalActivityLevel());
+		user.setPhysicallyActive(registerDto.isPhysicallyActive());
+		user.setEmail(registerDto.getEmail());
+		user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+		user.calculateDailyCaloricNeeds();
+		user.calculateIdealWeight();
+		Set<Role> roles = new HashSet<>();
+
+		if (registerDto.getRoles() != null) {
+			registerDto.getRoles().forEach(role -> {
+				Role userRole = roleRepository.findByRoleName(getRole(role)).get();
+				roles.add(userRole);
+			});
+		} else {
+			Role userRole = roleRepository.findByRoleName(ERole.ROLE_USER).get();
+			roles.add(userRole);
+		}
+
+		user.setRoles(roles);
+		System.out.println(user);
+		userRepository.save(user);
+
+		return "User registered successfully!.";
+	}
+
+	public ERole getRole(String role) {
+		if (role.equals("ROLE_ADMIN"))
+			return ERole.ROLE_ADMIN;
+		return ERole.ROLE_USER;
+	}
+
 }

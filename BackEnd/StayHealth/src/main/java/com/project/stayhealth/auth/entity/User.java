@@ -75,8 +75,8 @@ public class User {
 	@Column(precision = 2)
 	private Double dailyCaloricNeeds;
 
-//	@OneToMany(mappedBy = "user")
-//	private List<WeightMeasurement> weightHistory;
+	@Column(precision = 2)
+	private Double idealWeight;
 
 	@Column(nullable = false, unique = true)
 	private String username;
@@ -219,5 +219,14 @@ public class User {
 
 		setDailyCaloricNeeds(result);
 
+	}
+
+	// formula Keys:
+	// MALE: IdealWeight = H^2 * 22,1
+	// FEMALE: IdealWeight = H^2 * 20,6
+	public void calculateIdealWeight() {
+		Double value = getGender().equals(EGender.MALE) ? 22.1 : 20.6;
+		Double result = Math.sqrt(getHeightCm() / 100) * value;
+		setIdealWeight(result);
 	}
 }
