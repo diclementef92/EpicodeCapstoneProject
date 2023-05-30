@@ -4,10 +4,10 @@ const BASEURL = `http://localhost:${
   process.env.REACT_APP_SERVER_PORT ? process.env.REACT_APP_SERVER_PORT : 8080
 }/api/weights/`;
 
-export const FetchWeightsByUsername = async (username) => {
+export const FetchWeightsByUsernameOrderedByDateAsc = async (username) => {
   if (localStorage.getItem("token")) {
     try {
-      const response = await fetch(BASEURL + "user/" + username, {
+      const response = await fetch(BASEURL + "ordered-by-date/" + username, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

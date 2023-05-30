@@ -19,14 +19,16 @@ public interface WeightMeasurementRepository
 
 	Optional<List<WeightMeasurement>> findByUserId(Long id);
 
+	Page<WeightMeasurement> findByUserId(Long id, Pageable pageable);
+
 	@Query(value = "SELECT w.* FROM weight_measurements w INNER JOIN users u ON w.user_id = u.id WHERE u.username = :username", nativeQuery = true)
 	Optional<List<WeightMeasurement>> findByUsername(@Param("username") String username);
 
-	@Query(value = "SELECT w.* FROM weight_measurements w WHERE w.user_id = :userid ORDER BY w.date DESC", nativeQuery = true)
-	Optional<List<WeightMeasurement>> findAllByUserIdOrderedByDateDesc(@Param("userid") Long userid);
+	@Query(value = "SELECT w.* FROM weight_measurements w INNER JOIN users u ON w.user_id = u.id WHERE u.username = :username ORDER BY w.date ASC", nativeQuery = true)
+	Optional<List<WeightMeasurement>> findAllByUsernameOrderedByDateAsc(@Param("username") String username);
 
-	Page<WeightMeasurement> findByUserId(Long id, Pageable pageable);
-
-//	Page<WeightMeasurement> findAllOrderedByDate(Pageable pageable);
+	@Query(value = "SELECT w.* FROM weight_measurements w INNER JOIN users u ON w.user_id = u.id WHERE u.username = :username ORDER BY w.date ASC", nativeQuery = true)
+	Page<List<WeightMeasurement>> findAllByUsernameOrderedByDateAsc(@Param("username") String username,
+			Pageable pageable);
 
 }

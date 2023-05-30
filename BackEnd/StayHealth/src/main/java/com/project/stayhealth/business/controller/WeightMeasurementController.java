@@ -61,10 +61,10 @@ public class WeightMeasurementController {
 		return new ResponseEntity<WeightMeasurement>(service.addWeightMeasurement(username, weight), HttpStatus.OK);
 	}
 
-	@GetMapping("/ordered-by-date/{idUser}")
+	@GetMapping("/ordered-by-date/{username}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<List<WeightMeasurement>> findAllByUserIdOrderedByDateDesc(@PathVariable Long idUser) {
-		return new ResponseEntity<List<WeightMeasurement>>(service.findAllByUserIdOrderedByDateDesc(idUser),
+	public ResponseEntity<List<WeightMeasurement>> findAllByUsernameOrderedByDateAsc(@PathVariable String username) {
+		return new ResponseEntity<List<WeightMeasurement>>(service.findAllByUsernameOrderedByDateAsc(username),
 				HttpStatus.OK);
 	}
 }

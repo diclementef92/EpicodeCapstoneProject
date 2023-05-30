@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Col, Container, Row, Table } from "react-bootstrap";
 
-import { FetchWeightsByUsername } from "../hooks/FetchWeights";
-import { useRef } from "react";
+import { FetchWeightsByUsernameOrderedByDateAsc } from "../hooks/FetchWeights";
+
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory";
 
 const Weights = () => {
   const userDto = useSelector((state) => state.userDto);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const [errMessage, setErrMessage] = useState("");
   const [weights, setWeights] = useState([]);
-  const chartRef = useRef(null);
 
   const retriveData = async () => {
-    const data = await FetchWeightsByUsername(userDto.username);
+    const data = await FetchWeightsByUsernameOrderedByDateAsc(userDto.username);
     if (data) {
       if (data.errMessage) {
         setErrMessage(data.errMessage);
@@ -63,18 +60,20 @@ const Weights = () => {
                 theme={VictoryTheme.material}
                 domainPadding={20}
                 color={"green"}
+                animate={{
+                  duration: 500,
+                }}
               >
                 <VictoryLine
                   data={weights}
+                  // interpolation="natural"
+
                   // data accessor for x values
                   x="date"
                   // data accessor for y values
                   y="weight"
                   style={{
                     data: { stroke: "green", strokeWidth: 4 },
-                  }}
-                  animate={{
-                    duration: 1000,
                   }}
                 />
               </VictoryChart>
