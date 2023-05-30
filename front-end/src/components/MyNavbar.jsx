@@ -31,46 +31,47 @@ const MyNavbar = () => {
 
   const handleLogOut = () => {
     dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("token");
     navigate("/");
   };
 
   return (
     <>
-      <Navbar expand="lg" bg="light" variant="light">
-        <Container>
+      <Navbar expand="md" bg="light" variant="light">
+        <Container fluid>
           <Navbar.Brand className="d-flex align-items-center" href="./">
             <Image src={logo} width={40} className="me-4" />
             <span className="brand-name">StayHealth</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse
-            className="justify-content-between"
+            className="justify-content-between ms-0"
             id="responsive-navbar-nav"
           >
             <Nav>
               {" "}
               <Nav.Link
                 as={NavLink}
-                activeClassName="active-link"
+                activeclassname="active-link"
                 to="/dashboard"
               >
                 DashBoard
               </Nav.Link>
               <Nav.Link
                 as={NavLink}
-                activeClassName="active-link"
+                activeclassname="active-link"
                 to="/myprofile"
               >
                 My Profile
               </Nav.Link>
               <Nav.Link
                 as={NavLink}
-                activeClassName="active-link"
+                activeclassname="active-link"
                 to="/weights"
               >
                 Weight Measurements
               </Nav.Link>
-              <Nav.Link as={NavLink} activeClassName="active-link" to="/foods">
+              <Nav.Link as={NavLink} activeclassname="active-link" to="/foods">
                 Food calories
               </Nav.Link>
             </Nav>{" "}

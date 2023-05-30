@@ -9,6 +9,7 @@ import Profile from "./components/Profile";
 import Weights from "./components/Weights";
 import Foods from "./components/Foods";
 import PageNotFound from "./components/PageNotFound";
+import MyNavbar from "./components/MyNavbar";
 
 function App() {
   return (
@@ -18,10 +19,42 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/myprofile" element={<Profile />}></Route>
-          <Route path="/weights" element={<Weights />}></Route>
-          <Route path="/foods" element={<Foods />}></Route>
+          <Route
+            path="/dashboard"
+            element={
+              <>
+                <MyNavbar />
+                <Dashboard />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/myprofile"
+            element={
+              <>
+                <MyNavbar />
+                <Profile />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/weights"
+            element={
+              <>
+                <MyNavbar />
+                <Weights />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/foods"
+            element={
+              <>
+                <MyNavbar />
+                <Foods />
+              </>
+            }
+          ></Route>
           <Route path="*" element={<PageNotFound />}></Route>
         </Routes>
       </BrowserRouter>

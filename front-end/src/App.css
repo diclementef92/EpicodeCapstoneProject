@@ -9,5 +9,5 @@ body {
   background: url("./assets/erbe-e-verdure-su-sfondo-bianco.jpg") no-repeat
     center center fixed;
   background-size: cover;
-  overflow: hidden;
+  overflow-x: hidden;
 }

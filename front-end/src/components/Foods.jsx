@@ -15,11 +15,7 @@ const Foods = () => {
     console.log(userDto);
   }, []);
 
-  return (
-    <>
-      <MyNavbar />
-    </>
-  );
+  return <></>;
 };
 
 export default Foods;

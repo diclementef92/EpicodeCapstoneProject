@@ -117,7 +117,6 @@ const Profile = () => {
 
   return (
     <>
-      <MyNavbar />
       <Container className="d-flex justify-content-sm-center mt-4">
         <Row>
           <Col>

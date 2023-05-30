@@ -19,7 +19,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <MyNavbar />
       <Container className="mt-4">
         <Card className="p-4">
           <Card.Title>
