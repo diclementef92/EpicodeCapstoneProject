@@ -78,7 +78,7 @@ const MyNavbar = () => {
             <div>
               {userDto.username}{" "}
               <OverlayTrigger
-                placement="right"
+                placement="bottom"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip}
               >
