@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-
 const BASEURL = `http://localhost:${
   process.env.REACT_APP_SERVER_PORT ? process.env.REACT_APP_SERVER_PORT : 8080
 }/api/weights/`;

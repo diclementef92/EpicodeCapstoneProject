@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { Button, Card, Col, Container, Nav, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 
 const Home = () => {
   useEffect(() => {}, []);

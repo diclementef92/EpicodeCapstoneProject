@@ -5,7 +5,6 @@ import {
   faArrowRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
-import { SignUp } from "../hooks/FechAuthentication";
 import {
   Button,
   Card,
@@ -17,7 +16,6 @@ import {
 } from "react-bootstrap";
 import "../assets/Profile.css";
 
-import MyNavbar from "./MyNavbar";
 import { UpdateUser } from "../hooks/FetchUser";
 import { useDispatch, useSelector } from "react-redux";
 

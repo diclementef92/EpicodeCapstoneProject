@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
-import { SignUp } from "../hooks/FechAuthentication";
 import {
   Button,
   Card,
@@ -11,6 +10,7 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
+import { SignUp } from "../hooks/FechAuthentication";
 import "../assets/SignForm.css";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;

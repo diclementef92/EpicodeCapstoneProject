@@ -6,12 +6,12 @@ import {
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import logo from "../assets/logo.png";
 import "../assets/Navbar.css";
 
 const MyNavbar = () => {
