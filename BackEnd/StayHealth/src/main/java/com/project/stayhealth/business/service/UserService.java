@@ -97,7 +97,8 @@ public class UserService {
 		return UserDTO.builder().firstName(user.getFirstName()).lastName(user.getLastName())
 				.birthDay(user.getBirthDay()).weightKg(user.getWeightKg()).heightCm(user.getHeightCm())
 				.gender(user.getGender()).physicalActivityLevel(user.getPhysicalActivityLevel())
-				.physicallyActive(user.isPhysicallyActive()).dailyCaloricNeeds(user.getDailyCaloricNeeds())
-				.username(user.getUsername()).email(user.getEmail()).build();
+				.idealWeight(user.getIdealWeight()).physicallyActive(user.isPhysicallyActive())
+				.dailyCaloricNeeds(user.getDailyCaloricNeeds()).username(user.getUsername()).email(user.getEmail())
+				.build();
 	}
 }

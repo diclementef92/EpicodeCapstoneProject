@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { FaRegPlusSquare, FiTrash2 } from "react-icons/fa";
 
 import {
   Alert,
@@ -24,7 +25,7 @@ const Weights = () => {
   const [errMessage, setErrMessage] = useState("");
   const [weights, setWeights] = useState([]);
 
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
   const [weightKg, setWeightKg] = useState(0);
   const [valid, setValid] = useState(true);
 
@@ -46,7 +47,7 @@ const Weights = () => {
   }, []);
 
   const addWeight = async () => {
-    if (date && weightKg) {
+    if (date && weightKg && weightKg >= 30 && weightKg <= 250) {
       const res = await AddWeightForUsername(userDto.username, {
         date: date,
         weight: weightKg,
@@ -71,7 +72,7 @@ const Weights = () => {
           <Alert variant="danger">{errMessage}</Alert>
         ) : (
           <Row>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               <Table striped bgcolor="white" className="text-center">
                 <thead>
                   <tr>
@@ -83,8 +84,11 @@ const Weights = () => {
                   {weights.length > 0 ? (
                     weights.map((w, i) => (
                       <tr key={"weight-" + i}>
-                        <td>{w.date}</td>
+                        <td>{new Date(w.date).toLocaleDateString()}</td>
                         <td>{w.weight}</td>
+                        <td>
+                          <FiTrash2 />
+                        </td>
                       </tr>
                     ))
                   ) : (
@@ -104,6 +108,7 @@ const Weights = () => {
                           setDate(e.target.value);
                           setValid(true);
                         }}
+                        max={new Date().toISOString().slice(0, 10)}
                         value={date}
                         required
                       />
@@ -122,11 +127,13 @@ const Weights = () => {
                         required
                         step="0.01"
                         min="30"
-                        max="300"
+                        max="250"
                       />
-                      <Button variant="success" onClick={addWeight}>
-                        +
-                      </Button>
+                      <FaRegPlusSquare
+                        className="fs-2 text-success"
+                        cursor={"pointer"}
+                        onClick={addWeight}
+                      />
                     </td>
                   </tr>
                 </tbody>
@@ -137,7 +144,7 @@ const Weights = () => {
                 ""
               )}
             </Col>
-            <Col xs={6}>
+            <Col xs={12} md={6}>
               <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={20}

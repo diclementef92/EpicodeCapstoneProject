@@ -128,13 +128,13 @@ const Profile = () => {
                       My Profile{" "}
                       <FontAwesomeIcon
                         icon={faPencil}
-                        className="icon-editable"
+                        cursor={"pointer"}
                         visibility={editable ? "hidden" : "visible"}
                         onClick={() => setEditable(!editable)}
                       />
                       <FontAwesomeIcon
                         icon={faArrowRotateRight}
-                        className="icon-editable"
+                        cursor={"pointer"}
                         visibility={editable ? "visible" : "hidden"}
                         onClick={() => {
                           setEditable(!editable);

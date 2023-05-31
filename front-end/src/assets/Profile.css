@@ -13,9 +13,6 @@ form {
   padding: 1rem;
   box-shadow: 2px 1px 5px 0px;
 }
-.section-login .icon-editable {
-  cursor: pointer;
-}
 
 .instructions {
   font-size: 0.75rem;
