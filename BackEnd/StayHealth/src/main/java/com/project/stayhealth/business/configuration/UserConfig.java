@@ -5,10 +5,13 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.github.javafaker.Faker;
 import com.project.stayhealth.auth.entity.ERole;
@@ -23,6 +26,10 @@ public class UserConfig {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	@Qualifier("passwordEncoder")
+	ObjectProvider<PasswordEncoder> passwordEncoderBean;
 
 	private Faker fake = Faker.instance(new Locale("it-IT"));
 
@@ -48,7 +55,9 @@ public class UserConfig {
 						: random % 3 == 0 ? EPhysicalActivityLevel.MEDIUM : EPhysicalActivityLevel.HIGH)
 				.physicallyActive(random % 2 == 0 ? true : false).username(lastname + fake.number().randomDigit())
 				.roles(roles).email(firstname.substring(0, 1) + "." + lastname + "@mail.it")
-				.password(fake.funnyName().name().replace(" ", "") + "!" + fake.number().randomNumber()).build();
+				.password(passwordEncoderBean.getObject()
+						.encode(fake.funnyName().name().replace(" ", "") + "!" + fake.number().randomNumber()))
+				.build();
 
 		newUser.calculateDailyCaloricNeeds();
 		newUser.calculateIdealWeight();

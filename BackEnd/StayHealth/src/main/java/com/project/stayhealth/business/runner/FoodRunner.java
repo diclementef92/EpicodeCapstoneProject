@@ -33,7 +33,7 @@ public class FoodRunner implements ApplicationRunner {
 			if (useCsvFilePath) {
 				// using csv file
 				service.importFoodsFromCSVFile();
-				log.info("foods imported form file ");
+				log.info("foods imported from file ");
 			} else {
 				// using method for create fake records
 				for (int i = 0; i < 100; i++) {
