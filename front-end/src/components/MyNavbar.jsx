@@ -45,7 +45,7 @@ const MyNavbar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse
-            className="justify-content-between ms-0"
+            className="justify-content-between text-center"
             id="responsive-navbar-nav"
           >
             <Nav>

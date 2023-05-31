@@ -41,7 +41,10 @@ export const SignIn = async (props) => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.log("Authentication: Error in SignIn,  status", response.status);
+      console.log(
+        "Authentication: Error in SignIn,  status code: ",
+        response.status
+      );
       return { ...data, status: response.status };
     }
 

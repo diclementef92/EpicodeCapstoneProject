@@ -226,7 +226,7 @@ public class User {
 	// FEMALE: IdealWeight = H^2 * 20,6
 	public void calculateIdealWeight() {
 		Double value = getGender().equals(EGender.MALE) ? 22.1 : 20.6;
-		Double result = Math.sqrt(getHeightCm() / 100) * value;
+		Double result = Math.floor(Math.sqrt(getHeightCm() / 100) * value);
 		setIdealWeight(result);
 	}
 }

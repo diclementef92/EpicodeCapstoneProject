@@ -273,7 +273,7 @@ const Profile = () => {
                           name="physicalActivityLevel"
                           value="LOW"
                           disabled={!editable}
-                          defaultChecked={physicalActivityLevel == "LOW"}
+                          defaultChecked={physicalActivityLevel === "LOW"}
                           required
                           onClick={(e) => {
                             setPhysicalActivityLevel(e.target.value);
@@ -288,7 +288,7 @@ const Profile = () => {
                           name="physicalActivityLevel"
                           value="MEDIUM"
                           disabled={!editable}
-                          defaultChecked={physicalActivityLevel == "MEDIUM"}
+                          defaultChecked={physicalActivityLevel === "MEDIUM"}
                           required
                           onClick={(e) => {
                             setPhysicalActivityLevel(e.target.value);
@@ -304,7 +304,7 @@ const Profile = () => {
                           name="physicalActivityLevel"
                           value="HIGH"
                           disabled={!editable}
-                          defaultChecked={physicalActivityLevel == "HIGH"}
+                          defaultChecked={physicalActivityLevel === "HIGH"}
                           required
                           onClick={(e) => {
                             setPhysicalActivityLevel(e.target.value);
@@ -321,7 +321,7 @@ const Profile = () => {
                           id="physicallyActive"
                           name="physicallyActive"
                           disabled={!editable}
-                          defaultChecked={physicallyActive == true}
+                          defaultChecked={physicallyActive === true}
                           onClick={() => {
                             setPhysicallyActive(
                               !userToUpdateDTO.physicallyActive

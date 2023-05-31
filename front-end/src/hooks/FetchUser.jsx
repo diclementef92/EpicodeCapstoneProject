@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-
 const BASEURL = `http://localhost:${
   process.env.REACT_APP_SERVER_PORT ? process.env.REACT_APP_SERVER_PORT : 8080
 }/api/users/`;
@@ -13,10 +11,9 @@ export const FetchUser = async (username) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        redirect: "manual",
       });
       if (!response.ok) {
-        console.log("Error getting user data,  status", response.status);
+        console.log("Error getting user data,  status code: ", response.status);
 
         return {
           errMessage:
@@ -51,10 +48,9 @@ export const UpdateUser = async (username, userToUpdateDTO) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        redirect: "manual",
       });
       if (!response.ok) {
-        console.log("Error updating user,  status", response.status);
+        console.log("Error updating user,  status code: ", response.status);
 
         return {
           errMessage: "Error updating user,  status code: " + response.status,

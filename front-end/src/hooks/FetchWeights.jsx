@@ -44,6 +44,44 @@ export const FetchWeightsByUsernameOrderedByDateAsc = async (username) => {
   }
 };
 
+export const AddWeightForUsername = async (username, weight) => {
+  if (localStorage.getItem("token")) {
+    try {
+      const response = await fetch(BASEURL + "user/" + username, {
+        method: "POST",
+        body: JSON.stringify(weight),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (!response.ok) {
+        console.log("Error adding weight,  status", response.status);
+
+        return {
+          errMessage: "Error adding weight,  status code: " + response.status,
+        };
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // return user data
+      return data;
+      //
+    } catch (error) {
+      console.log(
+        "Error adding weight: Error in UpdateWeightById fetch",
+        error
+      );
+      return {
+        errMessage: "Error adding weight",
+      };
+    }
+  } else {
+    return { errMessage: "User not logged in" };
+  }
+};
 export const UpdateWeightById = async (weight_id, weight) => {
   if (localStorage.getItem("token")) {
     try {
@@ -54,13 +92,12 @@ export const UpdateWeightById = async (weight_id, weight) => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        redirect: "manual",
       });
       if (!response.ok) {
-        console.log("Error updating weight,  status", response.status);
+        console.log("Error updating weight,  status code: ", response.status);
 
         return {
-          errMessage: "Error updating weight,  status code: " + response.status,
+          errMessage: "Error updating weight",
         };
       }
 
