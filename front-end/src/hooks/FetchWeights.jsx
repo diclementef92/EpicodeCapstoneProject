@@ -120,3 +120,40 @@ export const UpdateWeightById = async (weight_id, weight) => {
     return { errMessage: "User not logged in" };
   }
 };
+export const DeleteWeightById = async (weight_id) => {
+  if (localStorage.getItem("token")) {
+    try {
+      const response = await fetch(BASEURL + weight_id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      if (!response.ok) {
+        console.log("Error deleting weight,  status code: ", response.status);
+
+        return {
+          errMessage: "Error deleting weight",
+        };
+      }
+
+      const data = await response.text();
+      console.log(data);
+
+      // return user data
+      return data;
+      //
+    } catch (error) {
+      console.log(
+        "Error deleting weight: Error in DeleteWeightById fetch",
+        error
+      );
+      return {
+        errMessage: "Error deleting weight",
+      };
+    }
+  } else {
+    return { errMessage: "User not logged in" };
+  }
+};

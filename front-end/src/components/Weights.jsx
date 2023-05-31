@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FaRegPlusSquare, FiTrash2 } from "react-icons/fa";
+import { FaRegPlusSquare } from "react-icons/fa";
+import { FiTrash2 } from "react-icons/fi";
 
 import {
   Alert,
@@ -14,6 +15,7 @@ import {
 
 import {
   AddWeightForUsername,
+  DeleteWeightById,
   FetchWeightsByUsernameOrderedByDateAsc,
 } from "../hooks/FetchWeights";
 
@@ -29,6 +31,11 @@ const Weights = () => {
   const [weightKg, setWeightKg] = useState(0);
   const [valid, setValid] = useState(true);
 
+  useEffect(() => {
+    console.log(userDto);
+    retriveData();
+  }, []);
+
   const retriveData = async () => {
     const data = await FetchWeightsByUsernameOrderedByDateAsc(userDto.username);
     if (data) {
@@ -40,11 +47,6 @@ const Weights = () => {
       }
     } else setErrMessage("Server error");
   };
-
-  useEffect(() => {
-    console.log(userDto);
-    retriveData();
-  }, []);
 
   const addWeight = async () => {
     if (date && weightKg && weightKg >= 30 && weightKg <= 250) {
@@ -59,6 +61,14 @@ const Weights = () => {
       }
     } else {
       showAlert();
+    }
+  };
+  const deleteWeight = async (id) => {
+    const res = await DeleteWeightById(id);
+    if (!res || res.errMessage) {
+      showAlert(errMessage);
+    } else {
+      retriveData();
     }
   };
 
@@ -78,6 +88,7 @@ const Weights = () => {
                   <tr>
                     <td>Date</td>
                     <td>Weight</td>
+                    <td></td>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,7 +98,11 @@ const Weights = () => {
                         <td>{new Date(w.date).toLocaleDateString()}</td>
                         <td>{w.weight}</td>
                         <td>
-                          <FiTrash2 />
+                          <FiTrash2
+                            className="fs-4 text-danger"
+                            cursor={"pointer"}
+                            onClick={() => deleteWeight(w.id)}
+                          />
                         </td>
                       </tr>
                     ))
@@ -113,8 +128,7 @@ const Weights = () => {
                         required
                       />
                     </td>
-                    <td className="d-flex justify-content-between">
-                      {" "}
+                    <td>
                       <input
                         type="number"
                         id="weightKg"
@@ -129,8 +143,10 @@ const Weights = () => {
                         min="30"
                         max="250"
                       />
+                    </td>
+                    <td>
                       <FaRegPlusSquare
-                        className="fs-2 text-success"
+                        className="fs-4 text-success"
                         cursor={"pointer"}
                         onClick={addWeight}
                       />
