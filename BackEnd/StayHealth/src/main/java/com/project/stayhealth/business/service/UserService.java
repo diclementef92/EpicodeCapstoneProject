@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,41 +53,46 @@ public class UserService {
 		User userToUpdate = repo.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-		// verify if exist another user with same username or email
-		Optional<User> userFound = repo.findByUsernameOrEmail(userDto.getUsername(), userDto.getEmail());
-		if (userFound.isEmpty() || userFound.get().equals(userToUpdate)) {
-			// update only fields present in Dto body
-			if (userDto.getFirstName() != null)
-				userToUpdate.setFirstName(userDto.getFirstName());
+		try {
+			// verify if exist another user with same username or email
+			Optional<User> userFound = repo.findByUsernameOrEmail(userDto.getUsername(), userDto.getEmail());
+			if (userFound.isEmpty() || userFound.get().equals(userToUpdate)) {
+				// update only fields present in Dto body
+				if (userDto.getFirstName() != null)
+					userToUpdate.setFirstName(userDto.getFirstName());
 
-			if (userDto.getLastName() != null)
-				userToUpdate.setLastName(userDto.getLastName());
+				if (userDto.getLastName() != null)
+					userToUpdate.setLastName(userDto.getLastName());
 
-			if (userDto.getBirthDay() != null)
-				userToUpdate.setBirthDay(userDto.getBirthDay());
+				if (userDto.getBirthDay() != null)
+					userToUpdate.setBirthDay(userDto.getBirthDay());
 
-			if (userDto.getHeightCm() != null)
-				userToUpdate.setHeightCm(userDto.getHeightCm());
+				if (userDto.getHeightCm() != null)
+					userToUpdate.setHeightCm(userDto.getHeightCm());
 
-			if (userDto.getPhysicalActivityLevel() != null)
-				userToUpdate.setPhysicalActivityLevel(userDto.getPhysicalActivityLevel());
+				if (userDto.getPhysicalActivityLevel() != null)
+					userToUpdate.setPhysicalActivityLevel(userDto.getPhysicalActivityLevel());
 
-			if (userDto.getPhysicallyActive() != null)
-				if (userDto.getPhysicallyActive())
-					userToUpdate.setPhysicallyActive(userDto.getPhysicallyActive().booleanValue());
+				if (userDto.getPhysicallyActive() != null)
+					if (userDto.getPhysicallyActive())
+						userToUpdate.setPhysicallyActive(userDto.getPhysicallyActive().booleanValue());
 
-			if (userDto.getUsername() != null)
-				userToUpdate.setUsername(userDto.getUsername());
+				if (userDto.getUsername() != null)
+					userToUpdate.setUsername(userDto.getUsername());
 
-			if (userDto.getEmail() != null)
-				userToUpdate.setEmail(userDto.getEmail());
+				if (userDto.getEmail() != null)
+					userToUpdate.setEmail(userDto.getEmail());
 
-			userToUpdate.calculateDailyCaloricNeeds();
-			userToUpdate.calculateIdealWeight();
+				userToUpdate.calculateDailyCaloricNeeds();
+				userToUpdate.calculateIdealWeight();
 
-			return userDtoFrom(repo.save(userToUpdate));
-		} else
+				return userDtoFrom(repo.save(userToUpdate));
+			} else
+				throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");
+
+		} catch (IncorrectResultSizeDataAccessException e) {
 			throw new MyAPIException(HttpStatus.BAD_REQUEST, "username or email already present");
+		}
 	}
 
 	public void removeUser(Long id) {

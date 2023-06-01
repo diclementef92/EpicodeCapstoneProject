@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,11 +41,16 @@ public class UsersController {
 
 	}
 
-//	@GetMapping("/{id}")
-//	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")
-//	public ResponseEntity<User> getUserById(@PathVariable Long id) {
-//		return new ResponseEntity<User>(userService.findById(id), HttpStatus.FOUND);
-//	}
+	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public String deleteUserById(@PathVariable Long id) {
+		if (userService.findById(id) != null) {
+			userService.removeUser(id);
+			return "User with id " + id + " removed!";
+		}
+		return "not found";
+
+	}
 
 	@GetMapping("/{username}")
 	@PreAuthorize("hasRole('ADMIN') OR hasRole('USER')")

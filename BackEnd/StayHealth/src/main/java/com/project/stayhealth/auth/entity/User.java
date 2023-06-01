@@ -217,7 +217,7 @@ public class User {
 					getBirthDay() + " is not a valid value for birthDay, the age range is between 18 e 120");
 		}
 
-		setDailyCaloricNeeds(result);
+		setDailyCaloricNeeds(Math.floor(result));
 
 	}
 

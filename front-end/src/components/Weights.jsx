@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FaRegPlusSquare } from "react-icons/fa";
+import { FaRegPlusSquare, FaPencilAlt } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 
 import {
@@ -17,6 +17,7 @@ import {
   AddWeightForUsername,
   DeleteWeightById,
   FetchWeightsByUsernameOrderedByDateAsc,
+  UpdateWeightById,
 } from "../hooks/FetchWeights";
 
 import { VictoryChart, VictoryLine, VictoryTheme } from "victory";
@@ -71,6 +72,14 @@ const Weights = () => {
       retriveData();
     }
   };
+  const updateWeight = async (id, weightDto) => {
+    const res = await UpdateWeightById(id, weightDto);
+    if (!res || res.errMessage) {
+      showAlert(errMessage);
+    } else {
+      retriveData();
+    }
+  };
 
   const showAlert = () => {
     setValid(false);
@@ -98,6 +107,11 @@ const Weights = () => {
                         <td>{new Date(w.date).toLocaleDateString()}</td>
                         <td>{w.weight}</td>
                         <td>
+                          <FaPencilAlt
+                            className="me-2"
+                            cursor={"pointer"}
+                            onClick={() => updateWeight(w.id)}
+                          />
                           <FiTrash2
                             className="fs-4 text-danger"
                             cursor={"pointer"}

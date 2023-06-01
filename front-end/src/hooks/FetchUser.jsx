@@ -49,15 +49,14 @@ export const UpdateUser = async (username, userToUpdateDTO) => {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
+      const data = await response.json();
       if (!response.ok) {
         console.log("Error updating user,  status code: ", response.status);
-
         return {
-          errMessage: "Error updating user,  status code: " + response.status,
+          errMessage: "Error updating user: " + data.message,
         };
       }
 
-      const data = await response.json();
       console.log(data);
 
       // return user data

@@ -18,7 +18,7 @@ export const SignUp = async (props) => {
       console.log("Authentication: Error in SignUp,  status ", response.status);
       const data = await response.json();
       console.log(data);
-      return data.message;
+      return { errMessage: data.message };
     }
 
     const data = await response.text();

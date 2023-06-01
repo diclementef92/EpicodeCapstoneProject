@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -104,21 +105,27 @@ const Register = () => {
     registerDto.email = email;
     registerDto.username = user;
     registerDto.password = pwd;
-
-    setResponseMsg(await SignUp(registerDto));
-
+    const res = await SignUp(registerDto);
+    if (!res) {
+      setErrMsg("Server Error");
+      return;
+    }
+    if (res.errMessage) {
+      setErrMsg(res.errMessage);
+      setSuccess(false);
+      return;
+    }
+    setResponseMsg(res);
     setSuccess(true);
   };
 
   return (
     <Container className="d-flex justify-content-sm-center mt-4">
       {success ? (
-        <section>
-          <h1>{responseMsg}</h1>
-          <p>
-            <a href="./login">Sign In</a>
-          </p>
-        </section>
+        <Alert variant="success">
+          {responseMsg}
+          <a href="./login">Sign In</a>
+        </Alert>
       ) : (
         <Row>
           <Col>

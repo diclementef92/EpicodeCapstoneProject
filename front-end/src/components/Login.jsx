@@ -84,28 +84,29 @@ const Login = () => {
 
     if (!res) {
       setErrMsg("Server Error");
+      return;
     }
     //if response status not ok
-    else if (res.status) {
+    if (res.status) {
       setErrMsg(res.message);
       setSuccess(false);
-    } else {
-      setResponseMsg("Wellcome " + res.username);
-      console.log(res);
-
-      //save user to redux
-      const userDto = await FetchUser(res.username);
-      console.log(userDto);
-      if (userDto.errMessage) {
-        setErrMsg(userDto.errMessage);
-      } else {
-        dispatch({
-          type: "SET_USER",
-          payload: userDto,
-        });
-        setSuccess(true);
-      }
+      return;
     }
+    setResponseMsg("Wellcome " + res.username);
+    console.log(res);
+
+    //save user to redux
+    const userDto = await FetchUser(res.username);
+    console.log(userDto);
+    if (userDto.errMessage) {
+      setErrMsg(userDto.errMessage);
+      return;
+    }
+    dispatch({
+      type: "SET_USER",
+      payload: userDto,
+    });
+    setSuccess(true);
   };
 
   return (
