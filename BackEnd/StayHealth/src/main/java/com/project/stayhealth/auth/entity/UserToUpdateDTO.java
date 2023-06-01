@@ -18,6 +18,7 @@ public class UserToUpdateDTO {
 	private LocalDate birthDay;
 
 	private Double heightCm;
+	private Double weightKg;
 
 	private EPhysicalActivityLevel physicalActivityLevel;
 

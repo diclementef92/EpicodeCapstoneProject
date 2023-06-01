@@ -1,15 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { Card, Col, Container, Row } from "react-bootstrap";
 import "../assets/Dashboard.css";
+import { FetchWeightsByUsernameOrderedByDateAsc } from "../hooks/FetchWeights";
 
 const Dashboard = () => {
   const userDto = useSelector((state) => state.userDto);
+  const [recentWeight, setRecentWeight] = useState(0);
 
   useEffect(() => {
     console.log(userDto);
+    retriveRecentWeight();
   }, []);
+
+  const retriveRecentWeight = async () => {
+    const res = await FetchWeightsByUsernameOrderedByDateAsc(userDto.username);
+    if (res) {
+      setRecentWeight(res[res.length - 1].weight);
+    }
+  };
 
   return (
     <>
@@ -32,7 +42,7 @@ const Dashboard = () => {
           </Col>
           <Col>
             <span>My actual Weight: </span>
-            <span className="weight">{userDto.weightKg} Kg</span>
+            <span className="weight">{recentWeight} Kg</span>
           </Col>
         </Row>
       </Container>

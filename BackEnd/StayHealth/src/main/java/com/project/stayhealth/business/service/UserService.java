@@ -70,6 +70,9 @@ public class UserService {
 				if (userDto.getHeightCm() != null)
 					userToUpdate.setHeightCm(userDto.getHeightCm());
 
+				if (userDto.getWeightKg() != null)
+					userToUpdate.setWeightKg(userDto.getWeightKg());
+
 				if (userDto.getPhysicalActivityLevel() != null)
 					userToUpdate.setPhysicalActivityLevel(userDto.getPhysicalActivityLevel());
 

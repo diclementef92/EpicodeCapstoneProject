@@ -20,6 +20,7 @@ import {
   VictoryLine,
   VictoryTheme,
 } from "victory";
+import { UpdateUser } from "../hooks/FetchUser";
 
 const Weights = () => {
   const userDto = useSelector((state) => state.userDto);
@@ -43,6 +44,7 @@ const Weights = () => {
         setErrMessage(data.errMessage);
       } else {
         setWeights(data);
+
         console.log(weights);
       }
     } else setErrMessage("Server error");
@@ -57,7 +59,18 @@ const Weights = () => {
       if (!res || res.errMessage) {
         showAlert(errMessage);
       } else {
-        retriveData();
+        await retriveData();
+
+        // const res2 = await UpdateUser(userDto.username, {
+        //   weightKg: weights[weights.length - 1].weight,
+        // });// TODO: setta il secondo valore più recente al posto del primo
+        // if (res) {
+        //   if (res.errMessage) {
+        //     setErrMessage(errMessage);
+        //     return;
+        //   }
+        //   // TODO: update also the attribute weightKg in userDto in redux
+        // }
       }
     } else {
       showAlert();
@@ -66,7 +79,7 @@ const Weights = () => {
   const deleteWeight = async (id) => {
     const res = await DeleteWeightById(id);
     if (!res || res.errMessage) {
-      showAlert(errMessage);
+      showAlert();
     } else {
       retriveData();
     }
@@ -128,6 +141,9 @@ const Weights = () => {
                     ) : (
                       <tr>
                         <td>No data, add some measurements</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                       </tr>
                     )}
 
