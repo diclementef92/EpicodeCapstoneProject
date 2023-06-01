@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import { Card, Container } from "react-bootstrap";
-import "../assets/dashboard.css";
+import { Card, Col, Container, Row } from "react-bootstrap";
+import "../assets/Dashboard.css";
 
 const Dashboard = () => {
   const userDto = useSelector((state) => state.userDto);
@@ -13,15 +13,28 @@ const Dashboard = () => {
 
   return (
     <>
-      <Container className="mt-4">
-        <Card className="p-4">
-          <Card.Title>
+      <Container className="mt-4 bg-light">
+        <Row>
+          <Col xs={12}>
             <span className="total-calories">{userDto.dailyCaloricNeeds}</span>
             <span className="fs-1"> Kcal</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <p>My Daily Caloric Need 😊</p>
-          </Card.Title>
-          <Card.Body></Card.Body>
-        </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <span>My ideal Weight: </span>
+            <span className="weight">{userDto.idealWeight} Kg</span>
+          </Col>
+          <Col>
+            <span>My actual Weight: </span>
+            <span className="weight">{userDto.weightKg} Kg</span>
+          </Col>
+        </Row>
       </Container>
     </>
   );

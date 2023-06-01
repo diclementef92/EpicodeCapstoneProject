@@ -1,0 +1,6 @@
+.edit-icon {
+  opacity: 0;
+}
+.record:hover .edit-icon {
+  opacity: 1;
+}

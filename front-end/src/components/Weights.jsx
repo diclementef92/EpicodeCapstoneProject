@@ -3,15 +3,9 @@ import { useSelector } from "react-redux";
 import { FaRegPlusSquare, FaPencilAlt } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 
-import {
-  Alert,
-  Button,
-  Col,
-  Container,
-  Form,
-  Row,
-  Table,
-} from "react-bootstrap";
+import { Alert, Col, Container, Form, Row, Table } from "react-bootstrap";
+
+import "../assets/Weights.css";
 
 import {
   AddWeightForUsername,
@@ -20,7 +14,12 @@ import {
   UpdateWeightById,
 } from "../hooks/FetchWeights";
 
-import { VictoryChart, VictoryLine, VictoryTheme } from "victory";
+import {
+  VictoryChart,
+  VictoryLegend,
+  VictoryLine,
+  VictoryTheme,
+} from "victory";
 
 const Weights = () => {
   const userDto = useSelector((state) => state.userDto);
@@ -72,6 +71,7 @@ const Weights = () => {
       retriveData();
     }
   };
+
   const updateWeight = async (id, weightDto) => {
     const res = await UpdateWeightById(id, weightDto);
     if (!res || res.errMessage) {
@@ -80,6 +80,8 @@ const Weights = () => {
       retriveData();
     }
   };
+
+  const handleUpdateWeight = () => {};
 
   const showAlert = () => {
     setValid(false);
@@ -90,114 +92,153 @@ const Weights = () => {
         {errMessage ? (
           <Alert variant="danger">{errMessage}</Alert>
         ) : (
-          <Row>
-            <Col xs={12} md={6}>
-              <Table striped bgcolor="white" className="text-center">
-                <thead>
-                  <tr>
-                    <td>Date</td>
-                    <td>Weight</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {weights.length > 0 ? (
-                    weights.map((w, i) => (
-                      <tr key={"weight-" + i}>
-                        <td>{new Date(w.date).toLocaleDateString()}</td>
-                        <td>{w.weight}</td>
-                        <td>
-                          <FaPencilAlt
-                            className="me-2"
-                            cursor={"pointer"}
-                            onClick={() => updateWeight(w.id)}
-                          />
-                          <FiTrash2
-                            className="fs-4 text-danger"
-                            cursor={"pointer"}
-                            onClick={() => deleteWeight(w.id)}
-                          />
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
+          <>
+            <Row>
+              <Col xs={12} md={6}>
+                <Table striped bgcolor="white" className="text-center">
+                  <thead>
                     <tr>
-                      <td>No data, add some measurements</td>
+                      <td>Date</td>
+                      <td>Weight</td>
                       <td></td>
                     </tr>
-                  )}
+                  </thead>
+                  <tbody>
+                    {weights.length > 0 ? (
+                      weights.map((w, i) => (
+                        <tr className="record" key={"weight-" + i}>
+                          <td>{new Date(w.date).toLocaleDateString()}</td>
+                          <td>{w.weight}</td>
+                          <td>
+                            <FaPencilAlt
+                              className="me-2 edit-icon"
+                              cursor={"pointer"}
+                              onClick={() => handleUpdateWeight(w.id)}
+                            />
+                          </td>
+                          <td>
+                            <FiTrash2
+                              className="fs-4 text-danger edit-icon"
+                              cursor={"pointer"}
+                              onClick={() => deleteWeight(w.id)}
+                            />
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td>No data, add some measurements</td>
+                      </tr>
+                    )}
 
-                  <tr>
-                    <td>
-                      <input
-                        type="date"
-                        id="date"
-                        autoComplete="off"
-                        onChange={(e) => {
-                          setDate(e.target.value);
-                          setValid(true);
-                        }}
-                        max={new Date().toISOString().slice(0, 10)}
-                        value={date}
-                        required
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        id="weightKg"
-                        autoComplete="off"
-                        onChange={(e) => {
-                          setWeightKg(e.target.value);
-                          setValid(true);
-                        }}
-                        value={weightKg}
-                        required
-                        step="0.01"
-                        min="30"
-                        max="250"
-                      />
-                    </td>
-                    <td>
-                      <FaRegPlusSquare
-                        className="fs-4 text-success"
-                        cursor={"pointer"}
-                        onClick={addWeight}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-              {!valid ? (
-                <Alert variant="danger">Date or weight not valid</Alert>
-              ) : (
-                ""
-              )}
-            </Col>
-            <Col xs={12} md={6}>
-              <VictoryChart
-                theme={VictoryTheme.material}
-                domainPadding={20}
-                color={"green"}
-                animate={{
-                  duration: 500,
-                }}
-              >
-                <VictoryLine
-                  data={weights}
-                  // interpolation="natural"
-                  domain={{ y: [0, 250] }}
-                  // data accessor for x values
-                  x="date"
-                  // data accessor for y values
-                  y="weight"
-                  style={{
-                    data: { stroke: "green", strokeWidth: 4 },
+                    <tr>
+                      <td>
+                        <Form.Control
+                          type="date"
+                          id="date"
+                          autoComplete="off"
+                          onChange={(e) => {
+                            setDate(e.target.value);
+                            setValid(true);
+                          }}
+                          max={new Date().toISOString().slice(0, 10)}
+                          value={date}
+                          required
+                        />
+                      </td>
+                      <td>
+                        <Form.Control
+                          type="number"
+                          id="weightKg"
+                          autoComplete="off"
+                          onChange={(e) => {
+                            setWeightKg(e.target.value);
+                            setValid(true);
+                          }}
+                          value={weightKg}
+                          required
+                          step="0.01"
+                          min="30"
+                          max="250"
+                        />
+                      </td>
+                      <td></td>
+                      <td>
+                        <FaRegPlusSquare
+                          className="fs-4 text-success"
+                          cursor={"pointer"}
+                          onClick={addWeight}
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+                {!valid ? (
+                  <Alert variant="danger">Date or weight not valid</Alert>
+                ) : (
+                  ""
+                )}
+              </Col>
+              <Col xs={12} md={6} className="bg-light">
+                <VictoryChart
+                  theme={VictoryTheme.material}
+                  domainPadding={20}
+                  color={"green"}
+                  animate={{
+                    duration: 500,
                   }}
-                />
-              </VictoryChart>
-            </Col>
-          </Row>
+                >
+                  <VictoryLegend
+                    x={125}
+                    y={50}
+                    title="Legend"
+                    centerTitle
+                    orientation="horizontal"
+                    gutter={20}
+                    data={[
+                      {
+                        name: "measurements",
+                        symbol: { fill: "orange" },
+                      },
+                      { name: "ideal", symbol: { fill: "green" } },
+                    ]}
+                  />
+                  <VictoryLine
+                    // data accessor for x values
+                    x="date"
+                    // data accessor for y values
+                    y="weight"
+                    data={weights}
+                    domain={{
+                      y: [0, 200],
+                    }}
+                    style={{
+                      data: { stroke: "orange", strokeWidth: 4 },
+                    }}
+                  />
+                  <VictoryLine
+                    data={weights.map((x) => {
+                      return { date: x.date, weight: userDto.idealWeight };
+                    })}
+                    // interpolation="natural"
+                    domain={{
+                      y: [0, 100],
+                    }}
+                    // data accessor for x values
+                    x="date"
+                    // data accessor for y values
+                    y="weight"
+                    style={{
+                      data: { stroke: "green", strokeWidth: 4 },
+                    }}
+                  />
+                </VictoryChart>
+              </Col>
+            </Row>
+            <Row>
+              <Col></Col>
+            </Row>
+          </>
         )}
       </Container>
     </>

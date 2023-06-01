@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Container, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const Foods = () => {
@@ -8,7 +9,11 @@ const Foods = () => {
     console.log(userDto);
   }, []);
 
-  return <></>;
+  return (
+    <Container className="mt-2">
+      <Form.Control type="text"></Form.Control>
+    </Container>
+  );
 };
 
 export default Foods;
