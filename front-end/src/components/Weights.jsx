@@ -4,6 +4,7 @@ import { FaRegPlusSquare, FaPencilAlt } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 
 import { Alert, Col, Container, Form, Row, Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import "../assets/Weights.css";
 
@@ -103,7 +104,9 @@ const Weights = () => {
     <>
       <Container className="mt-4">
         {errMessage ? (
-          <Alert variant="danger">{errMessage}</Alert>
+          <Alert variant="danger">
+            {errMessage} <Link to={"/login"}>Sign in</Link>
+          </Alert>
         ) : (
           <>
             <Row>

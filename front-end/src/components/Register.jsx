@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import { SignUp } from "../hooks/FechAuthentication";
 import "../assets/SignForm.css";
+import { useDispatch } from "react-redux";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -32,6 +33,7 @@ const registerDto = {
 };
 
 const Register = () => {
+  const dispatch = useDispatch();
   const userRef = useRef();
   const errRef = useRef();
 
@@ -117,6 +119,9 @@ const Register = () => {
     }
     setResponseMsg(res);
     setSuccess(true);
+
+    dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("token");
   };
 
   return (
@@ -276,11 +281,12 @@ const Register = () => {
                   />
                   {/* Last Name field*/}
                   <label htmlFor="birthDay">BirthDay:</label>
-                  <input
+                  <Form.Control
                     type="date"
                     id="birthDay"
                     autoComplete="off"
                     onChange={(e) => setBirthDay(e.target.value)}
+                    max={new Date().toISOString().slice(0, 10)}
                     value={birthDay}
                     required
                   />
