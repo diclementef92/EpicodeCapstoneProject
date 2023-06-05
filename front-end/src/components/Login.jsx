@@ -112,7 +112,7 @@ const Login = () => {
 
   return (
     <Container>
-      <Row>
+      <Row className="mx-0">
         <Col></Col>
         {success ? (
           <Col xs={12} sm={6} className="mt-4">

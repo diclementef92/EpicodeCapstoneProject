@@ -11,7 +11,7 @@ const Foods = () => {
   const [foods, setFoods] = useState([]);
 
   useEffect(() => {
-    console.log(userDto);
+    if (userDto.username) setLoggedIn(true);
   }, []);
 
   const handleChange = async (e) => {

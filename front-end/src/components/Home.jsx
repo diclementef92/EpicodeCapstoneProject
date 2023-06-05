@@ -6,8 +6,9 @@ const Home = () => {
 
   return (
     <Container>
-      <Row className="justify-content-sm-center mt-4">
-        <Col sm="auto">
+      <Row>
+        <Col></Col>
+        <Col>
           <Card style={{ width: "18rem" }}>
             <Card.Body className="text-center">
               <Card.Title>StayHealth</Card.Title>
@@ -23,6 +24,7 @@ const Home = () => {
             </Card.Body>
           </Card>
         </Col>
+        <Col></Col>
       </Row>
     </Container>
   );

@@ -38,7 +38,7 @@ const Profile = () => {
   const userDto = useSelector((state) => state.userDto);
   const dispatch = useDispatch();
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [editable, setEditable] = useState(false);
 
   const userRef = useRef();
@@ -74,12 +74,15 @@ const Profile = () => {
       setLoggedIn(true);
       // at beginning focus on username field
       userRef?.current?.focus();
+    } else {
+      setLoggedIn(false);
     }
   }, []);
 
   const refreshPage = () => {
     window.location.reload(false);
   };
+  const resetForm = () => {};
 
   useEffect(() => {
     setValidName(USER_REGEX.test(user)); // verify the username with regex
@@ -109,7 +112,7 @@ const Profile = () => {
       setErrMsg(responseUser.errMessage);
       setSuccess(false);
     } else {
-      setResponseMsg("Profile Successful Updated! 👍");
+      setResponseMsg("Profile Successfully Updated! 👍");
       dispatch({
         type: "SET_USER",
         payload: responseUser,
@@ -121,248 +124,254 @@ const Profile = () => {
 
   return (
     <>
-      {!loggedIn ? (
-        <Container className="mt-4">
+      {" "}
+      <Container className="mt-4">
+        {!loggedIn ? (
           <Alert variant="danger">
             User not logged in <Link to={"/login"}>Sign in</Link>
           </Alert>
-        </Container>
-      ) : (
-        <Container className="d-flex justify-content-sm-center mt-4">
-          <Row>
-            <Col>
-              <Card className="section-login">
-                <Card.Body>
-                  {success ? (
-                    <h2>{responseMsg}</h2>
-                  ) : (
-                    <>
-                      <Card.Title>
-                        My Profile{" "}
-                        <FontAwesomeIcon
-                          icon={faPencil}
-                          cursor={"pointer"}
-                          visibility={editable ? "hidden" : "visible"}
-                          onClick={() => setEditable(!editable)}
-                        />
-                        <FontAwesomeIcon
-                          icon={faArrowRotateRight}
-                          cursor={"pointer"}
-                          visibility={editable ? "visible" : "hidden"}
-                          onClick={() => {
-                            setEditable(!editable);
-                            refreshPage();
-                          }}
-                        />
-                      </Card.Title>
-                      <p
-                        ref={errRef}
-                        className={errMsg ? "errmsg" : "offscreen"}
-                        aria-live="assertive"
-                      >
-                        {errMsg}
-                      </p>
-                      <Form onSubmit={handleSubmit}>
-                        {/* Username field */}
-                        <FloatingLabel label="Username" className="mb-2">
-                          <Form.Control
-                            className={
-                              user ? (validName ? "valid" : "invalid") : ""
-                            }
-                            disabled={!editable}
-                            placeholder="Username"
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            autoComplete="off"
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
-                            required
-                            //for screen reader
-                            aria-invalid={validName ? "false" : "true"}
-                            aria-describedby="uidnote"
-                            //
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-                          />
-
-                          <p
-                            id="uidnote"
-                            className={
-                              userFocus && user && !validName
-                                ? "instructions"
-                                : "offscreen"
-                            }
-                          >
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            4 to 24 characters.
-                            <br />
-                            Must begin with a letter.
-                            <br />
-                            Letters, numbers, underscores, hyphens allowed.
-                          </p>
-                        </FloatingLabel>
-                        {/* Email field */}
-                        <FloatingLabel label="Email" className="mb-2">
-                          <Form.Control
-                            placeholder="Email"
-                            type="email"
-                            id="email"
-                            disabled={!editable}
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            required
-                            //  onFocus={() => setUserFocus(true)}
-                            // onBlur={() => setUserFocus(false)}
-                          />
-                        </FloatingLabel>
-
-                        <br />
-                        {/* First Name field*/}
-                        <label htmlFor="firstName">First Name:</label>
+        ) : (
+          <Row className="mx-0">
+            <Col></Col>
+            <Col xs={12} sm={6} className="section-login ">
+              <>
+                {success ? (
+                  <h2>{responseMsg}</h2>
+                ) : (
+                  <>
+                    <h3>
+                      My Profile{" "}
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        cursor={"pointer"}
+                        visibility={editable ? "hidden" : "visible"}
+                        onClick={() => setEditable(!editable)}
+                      />
+                      <FontAwesomeIcon
+                        icon={faArrowRotateRight}
+                        cursor={"pointer"}
+                        visibility={editable ? "visible" : "hidden"}
+                        onClick={() => {
+                          setEditable(!editable);
+                          refreshPage();
+                        }}
+                      />
+                    </h3>
+                    <p
+                      ref={errRef}
+                      className={errMsg ? "errmsg" : "offscreen"}
+                      aria-live="assertive"
+                    >
+                      {errMsg}
+                    </p>
+                    <Form onSubmit={handleSubmit}>
+                      {/* Username field */}
+                      <FloatingLabel label="Username" className="mb-2">
                         <Form.Control
+                          className={
+                            user ? (validName ? "valid" : "invalid") : ""
+                          }
+                          disabled={!editable}
+                          placeholder="Username"
                           type="text"
-                          id="firstName"
-                          disabled={!editable}
+                          id="username"
+                          ref={userRef}
                           autoComplete="off"
-                          onChange={(e) => setFirstName(e.target.value)}
-                          value={firstName}
+                          onChange={(e) => setUser(e.target.value)}
+                          value={user}
                           required
-                        />
-                        {/* Last Name field*/}
-                        <label htmlFor="lastName">Last Name:</label>
-                        <Form.Control
-                          type="text"
-                          id="lastName"
-                          disabled={!editable}
-                          autoComplete="off"
-                          onChange={(e) => setLastName(e.target.value)}
-                          value={lastName}
-                          required
-                        />
-                        {/* Last Name field*/}
-                        <label htmlFor="birthDay">BirthDay:</label>
-                        <Form.Control
-                          type="date"
-                          id="birthDay"
-                          autoComplete="off"
-                          disabled={!editable}
-                          onChange={(e) => setBirthDay(e.target.value)}
-                          max={new Date().toISOString().slice(0, 10)}
-                          value={birthDay}
-                          required
+                          //for screen reader
+                          aria-invalid={validName ? "false" : "true"}
+                          aria-describedby="uidnote"
+                          //
+                          onFocus={() => setUserFocus(true)}
+                          onBlur={() => setUserFocus(false)}
                         />
 
-                        <br />
-
-                        {/* height Cm field*/}
-                        <label htmlFor="heightCm">Height (Cm):</label>
-                        <div>
-                          {" "}
-                          <Form.Control
-                            type="number"
-                            id="heightCm"
-                            autoComplete="off"
-                            disabled={!editable}
-                            onChange={(e) => setHeightCm(e.target.value)}
-                            value={heightCm}
-                            required
-                            step="0.01"
-                            min="100"
-                            max="250"
-                          />
-                          <span className="validity"></span>
-                        </div>
-
-                        <br />
-
-                        {/* physicalActivityLevel field*/}
-                        <label>Physical Activity Level:</label>
-
-                        <div>
-                          <Form.Control
-                            type="radio"
-                            id="low"
-                            name="physicalActivityLevel"
-                            value="LOW"
-                            disabled={!editable}
-                            defaultChecked={physicalActivityLevel === "LOW"}
-                            required
-                            onClick={(e) => {
-                              setPhysicalActivityLevel(e.target.value);
-                            }}
-                          />
-                          <label htmlFor="low">LOW</label>
-                        </div>
-                        <div>
-                          <Form.Control
-                            type="radio"
-                            id="medium"
-                            name="physicalActivityLevel"
-                            value="MEDIUM"
-                            disabled={!editable}
-                            defaultChecked={physicalActivityLevel === "MEDIUM"}
-                            required
-                            onClick={(e) => {
-                              setPhysicalActivityLevel(e.target.value);
-                            }}
-                          />
-                          <label htmlFor="medium">MEDIUM</label>
-                        </div>
-                        <div>
-                          {" "}
-                          <Form.Control
-                            type="radio"
-                            id="high"
-                            name="physicalActivityLevel"
-                            value="HIGH"
-                            disabled={!editable}
-                            defaultChecked={physicalActivityLevel === "HIGH"}
-                            required
-                            onClick={(e) => {
-                              setPhysicalActivityLevel(e.target.value);
-                            }}
-                          />
-                          <label htmlFor="high">HIGH</label>
-                        </div>
-
-                        <br />
-                        {/* physicallyActive field*/}
-                        <div>
-                          <Form.Control
-                            type="checkbox"
-                            id="physicallyActive"
-                            name="physicallyActive"
-                            disabled={!editable}
-                            defaultChecked={physicallyActive === true}
-                            onClick={() => {
-                              setPhysicallyActive(
-                                !userToUpdateDTO.physicallyActive
-                              );
-                            }}
-                          />
-                          <label htmlFor="physicallyActive">
-                            physically Active
-                          </label>
-                        </div>
-                        <br />
-                        <Button
-                          type="submit"
-                          variant="primary"
-                          disabled={!validName || !editable ? true : false}
+                        <p
+                          id="uidnote"
+                          className={
+                            userFocus && user && !validName
+                              ? "instructions"
+                              : "offscreen"
+                          }
                         >
-                          Save
-                        </Button>
-                      </Form>
-                    </>
-                  )}
-                </Card.Body>
-              </Card>
+                          <FontAwesomeIcon icon={faInfoCircle} />
+                          4 to 24 characters.
+                          <br />
+                          Must begin with a letter.
+                          <br />
+                          Letters, numbers, underscores, hyphens allowed.
+                        </p>
+                      </FloatingLabel>
+                      {/* Email field */}
+                      <FloatingLabel label="Email" className="mb-2">
+                        <Form.Control
+                          placeholder="Email"
+                          type="email"
+                          id="email"
+                          disabled={!editable}
+                          autoComplete="off"
+                          onChange={(e) => setEmail(e.target.value)}
+                          value={email}
+                          required
+                          //  onFocus={() => setUserFocus(true)}
+                          // onBlur={() => setUserFocus(false)}
+                        />
+                      </FloatingLabel>
+
+                      <br />
+                      {/* First Name field*/}
+                      <label htmlFor="firstName">First Name:</label>
+                      <Form.Control
+                        type="text"
+                        id="firstName"
+                        disabled={!editable}
+                        autoComplete="off"
+                        onChange={(e) => setFirstName(e.target.value)}
+                        value={firstName}
+                        required
+                      />
+                      {/* Last Name field*/}
+                      <label htmlFor="lastName">Last Name:</label>
+                      <Form.Control
+                        type="text"
+                        id="lastName"
+                        disabled={!editable}
+                        autoComplete="off"
+                        onChange={(e) => setLastName(e.target.value)}
+                        value={lastName}
+                        required
+                      />
+                      {/* Last Name field*/}
+                      <label htmlFor="birthDay">BirthDay:</label>
+                      <Form.Control
+                        type="date"
+                        id="birthDay"
+                        autoComplete="off"
+                        disabled={!editable}
+                        onChange={(e) => setBirthDay(e.target.value)}
+                        max={new Date().toISOString().slice(0, 10)}
+                        value={birthDay}
+                        required
+                      />
+
+                      <br />
+
+                      {/* height Cm field*/}
+                      <label htmlFor="heightCm">Height (Cm):</label>
+                      <div>
+                        {" "}
+                        <Form.Control
+                          type="number"
+                          id="heightCm"
+                          autoComplete="off"
+                          disabled={!editable}
+                          onChange={(e) => setHeightCm(e.target.value)}
+                          value={heightCm}
+                          required
+                          step="0.01"
+                          min="100"
+                          max="250"
+                        />
+                        <span className="validity"></span>
+                      </div>
+
+                      <br />
+
+                      {/* physicalActivityLevel field*/}
+                      <label>Physical Activity Level:</label>
+
+                      <Form.Check
+                        type="radio"
+                        id="low"
+                        name="physicalActivityLevel"
+                        value="LOW"
+                        label="Low:"
+                        disabled={!editable}
+                        defaultChecked={physicalActivityLevel === "LOW"}
+                        required
+                        onClick={(e) => {
+                          setPhysicalActivityLevel(e.target.value);
+                        }}
+                      />
+                      <p className="text-muted">
+                        employees, freelancers, technicians or similar
+                      </p>
+
+                      <Form.Check
+                        type="radio"
+                        id="medium"
+                        name="physicalActivityLevel"
+                        value="MEDIUM"
+                        label="Medium:"
+                        disabled={!editable}
+                        defaultChecked={physicalActivityLevel === "MEDIUM"}
+                        required
+                        onClick={(e) => {
+                          setPhysicalActivityLevel(e.target.value);
+                        }}
+                      />
+                      <p className="text-muted">
+                        housewives, domestic workers, sales staff or similar
+                      </p>
+
+                      <Form.Check
+                        type="radio"
+                        id="high"
+                        name="physicalActivityLevel"
+                        value="HIGH"
+                        label="High:"
+                        disabled={!editable}
+                        defaultChecked={physicalActivityLevel === "HIGH"}
+                        required
+                        onClick={(e) => {
+                          setPhysicalActivityLevel(e.target.value);
+                        }}
+                      />
+                      <p className="text-muted">
+                        workers in agriculture, breeding, fishing, production
+                        operators and transporters
+                      </p>
+                      <br />
+                      {/* physicallyActive field*/}
+
+                      <Form.Check
+                        type="checkbox"
+                        id="physicallyActive"
+                        name="physicallyActive"
+                        label="Physically Active:"
+                        disabled={!editable}
+                        defaultChecked={physicallyActive === true}
+                        onClick={() => {
+                          setPhysicallyActive(
+                            !userToUpdateDTO.physicallyActive
+                          );
+                        }}
+                      />
+                      <p className="text-muted">
+                        check if you dedicate four or five times a week at least
+                        20 minutes to physical exercises of sufficient intensity
+                        to cause evident sweating
+                      </p>
+
+                      <br />
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        disabled={!validName || !editable ? true : false}
+                      >
+                        Save
+                      </Button>
+                    </Form>
+                  </>
+                )}
+              </>
             </Col>
+            <Col></Col>
           </Row>
-        </Container>
-      )}
+        )}
+      </Container>
     </>
   );
 };
