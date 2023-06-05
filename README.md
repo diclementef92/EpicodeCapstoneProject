@@ -9,17 +9,17 @@ Alla registrazione il sito calcola il fabbisogno calorico giornaliero. Ogni gior
 e visualizzare le calorie assunte.
 
 ## Funzionalità:
-- form registrazione dati utente: anagrafica e dati necessari per il calcolo del fabbisogno calorico giornaliero
-- form giornaliero che data una lista di cibi inseriti dall’utente calcola le corrispondenti calorie totali
-- report del cambiamento del peso nel tempo con evidenziato l'obiettivo (peso forma)
+- form registrazione dati utente: anagrafica e dati necessari per il calcolo del fabbisogno calorico giornaliero e del peso ideale
+- ricerca cibi per nome e restitusce le corrispondenti calorie 
+- grafico del cambiamento del peso nel tempo con evidenziato l'obiettivo (peso forma)
 
 ## Tecnologie utilizzate:
-- Front End ->Html, Css, React 
-- Back End ->Java, Spring, JPA, Jdbc, JWT Authentication, PostgreSQL
+- Front End -> Html, Css, React, Redux
+- Back End  -> Java, Spring, JPA, Jdbc, JWT Authentication, PostgreSQL
 
 ## Istruzioni per eseguire Progetto:
 - scaricare repo
-- 
+
 - aprire la cartella backend con eclipse
 - creare Database di nome: "StayHealth" accessibile sulla porta 5432, è possibile cambiare questi valori nel file application.properties in BackEnd\StayHealth\src\main\resources
 - Run As SpringBootApp
