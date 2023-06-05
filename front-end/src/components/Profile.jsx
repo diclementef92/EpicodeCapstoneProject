@@ -73,7 +73,7 @@ const Profile = () => {
     if (userDto.username) {
       setLoggedIn(true);
       // at beginning focus on username field
-      if (userRef) userRef?.current.focus();
+      userRef?.current?.focus();
     }
   }, []);
 
