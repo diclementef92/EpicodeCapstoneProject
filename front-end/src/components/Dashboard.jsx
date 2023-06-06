@@ -36,7 +36,7 @@ const Dashboard = () => {
           </Alert>
         </Container>
       ) : (
-        <Container className="mt-4 bg-light">
+        <Container className="mt-4 board">
           <Row>
             <Col xs={12}>
               <span className="total-calories">

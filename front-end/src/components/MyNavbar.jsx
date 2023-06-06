@@ -37,7 +37,7 @@ const MyNavbar = () => {
 
   return (
     <>
-      <Navbar expand="md" bg="light" variant="light">
+      <Navbar expand="md">
         <Container fluid>
           <Navbar.Brand className="d-flex align-items-center" href="./">
             <Image src={logo} width={40} className="me-4" />
