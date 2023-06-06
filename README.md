@@ -1,10 +1,10 @@
 # Epicode Capstone Project
 Progetto finale Epicode FullStack Web Developer Master 
 
-## Obiettivo del progetto: 
+## Obiettivo del progetto:📌
 Creare un sito web per aiutare gli utenti a monitorare le calorie ed avere una dieta sana.
 
-## Presentazione del progetto:
+## Presentazione del progetto - "Stay Health" 🥗
 Alla registrazione il sito calcola il fabbisogno calorico giornaliero. Ogni giorno sarà possibile inserire i cibi consumati durante i pasti della giornata 
 e visualizzare le calorie assunte.
 
@@ -13,7 +13,7 @@ e visualizzare le calorie assunte.
 - ricerca cibi per nome e restitusce le corrispondenti calorie 
 - grafico del cambiamento del peso nel tempo con evidenziato l'obiettivo (peso forma)
 
-## Tecnologie utilizzate:
+## Tecnologie utilizzate:💻
 - Front End -> Html, Css, React, Redux
 - Back End  -> Java, Spring, JPA, Jdbc, JWT Authentication, PostgreSQL
 
