@@ -15,8 +15,10 @@ const Foods = () => {
   }, []);
 
   const handleChange = async (e) => {
-    const foods = await FetchFoods(e.target.value);
-    setFoods(foods);
+    if (e.target.value) {
+      const foods = await FetchFoods(e.target.value);
+      setFoods(foods);
+    } else setFoods([]);
   };
 
   return (
