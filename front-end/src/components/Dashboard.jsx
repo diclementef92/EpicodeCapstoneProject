@@ -38,28 +38,29 @@ const Dashboard = () => {
       ) : (
         <Container className="mt-4 board">
           <Row>
-            <Col xs={12}>
+            <Col xs={12} sm={6}>
               <span className="total-calories">
                 {userDto.dailyCaloricNeeds}
               </span>
               <span className="fs-1"> Kcal</span>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
               <p>My Daily Caloric Need 😊</p>
             </Col>
+            <Col xs={12} sm={6}>
+              <Row>
+                <Col xs={12}>
+                  <span>My ideal Weight: </span>
+                  <span className="weight">{userDto.idealWeight} Kg</span>
+                  <br />
+                  <span>My actual Weight: </span>
+                  <span className="weight">{recentWeight} Kg</span>
+                </Col>
+              </Row>
+            </Col>
           </Row>
           <Row>
-            <Col>
-              <span>My ideal Weight: </span>
-              <span className="weight">{userDto.idealWeight} Kg</span>
-            </Col>
-            <Col>
-              <span>My actual Weight: </span>
-              <span className="weight">{recentWeight} Kg</span>
-            </Col>
+            <Col></Col>
           </Row>
+          <Row></Row>
         </Container>
       )}
     </>

@@ -4,3 +4,17 @@
 .record:hover .edit-icon {
   opacity: 1;
 }
+
+table {
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px 0px;
+}
+table > thead {
+  font-weight: bold;
+  color: green;
+}
+
+.VictoryContainer {
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px 1px;
+}
