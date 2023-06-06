@@ -126,11 +126,11 @@ const Weights = () => {
                           <td>{new Date(w.date).toLocaleDateString()}</td>
                           <td>{w.weight}</td>
                           <td>
-                            <FaPencilAlt
+                            {/* <FaPencilAlt
                               className="me-2 edit-icon"
                               cursor={"pointer"}
                               onClick={() => handleUpdateWeight(w.id)}
-                            />
+                            /> */}
                           </td>
                           <td>
                             <FiTrash2
@@ -229,7 +229,7 @@ const Weights = () => {
                     y="weight"
                     data={weights}
                     domain={{
-                      y: [0, 200],
+                      y: [0, 100],
                     }}
                     style={{
                       data: { stroke: "orange", strokeWidth: 4 },

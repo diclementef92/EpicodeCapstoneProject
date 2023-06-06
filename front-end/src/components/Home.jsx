@@ -9,7 +9,7 @@ const Home = () => {
       <Row>
         <Col></Col>
         <Col>
-          <Card style={{ width: "18rem" }}>
+          <Card style={{ width: "18rem" }} className="mt-4">
             <Card.Body className="text-center">
               <Card.Title>StayHealth</Card.Title>
               <Card.Text>
