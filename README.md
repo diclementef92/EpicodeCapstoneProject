@@ -27,3 +27,7 @@ e visualizzare le calorie assunte.
 - aprire cartella FrontEnd
 - in questa cartella eseguire npm start 
 - si aprirà il sito all'url localhost:3000
+
+## Screen shots: 📸
+
+![stayhealth_screens](https://github.com/diclementef92/EpicodeCapstoneProject/assets/37814932/f0414846-94c8-47b5-9c5f-e3aa40d3d0bd)
