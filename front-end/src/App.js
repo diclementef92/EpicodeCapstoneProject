@@ -10,6 +10,7 @@ import Weights from "./components/Weights";
 import Foods from "./components/Foods";
 import PageNotFound from "./components/PageNotFound";
 import MyNavbar from "./components/MyNavbar";
+import RegisterForm from "./components/RegisterForm";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/register" element={<Register />}></Route>
+          <Route path="/register" element={<RegisterForm />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route
             path="/dashboard"
