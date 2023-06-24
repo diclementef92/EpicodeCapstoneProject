@@ -1,21 +1,57 @@
-import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { Col, Row } from "react-bootstrap";
+import { FloatingLabel, Form } from "react-bootstrap";
 
 const FirstStep = ({ formData, setFormData }) => {
-  const errRef = useRef();
-  const [errMsg, setErrMsg] = useState("");
-
   return (
     <>
       <h2>Registration data:</h2>
-      <p
-        ref={errRef}
-        className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {errMsg}
-      </p>
+
+      {/* Username field */}
+      <FloatingLabel label="Username" className="mb-2">
+        <Form.Control
+          placeholder="Username"
+          type="text"
+          id="username"
+          autoComplete="off"
+          onChange={(e) => {
+            setFormData({ ...formData, username: e.target.value });
+          }}
+          value={formData.username}
+          required
+        />
+      </FloatingLabel>
+
+      {/* Email field */}
+      <FloatingLabel label="Email" className="mb-2">
+        <Form.Control
+          placeholder="Email"
+          type="email"
+          id="email"
+          autoComplete="off"
+          onChange={(e) => {
+            setFormData({ ...formData, email: e.target.value });
+          }}
+          value={formData.email}
+          required
+        />
+      </FloatingLabel>
+
+      {/* Password Field */}
+      <FloatingLabel label="password" className="mb-2">
+        <Form.Control
+          placeholder="Password"
+          type="password"
+          id="password"
+          onChange={(e) => {
+            setFormData({ ...formData, password: e.target.value });
+          }}
+          value={formData.password}
+          required
+        />
+      </FloatingLabel>
     </>
   );
 };
