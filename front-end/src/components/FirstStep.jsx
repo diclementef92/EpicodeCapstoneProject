@@ -1,7 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { useRef } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 
 const FirstStep = ({ formData, setFormData }) => {
@@ -16,9 +12,9 @@ const FirstStep = ({ formData, setFormData }) => {
           type="text"
           id="username"
           autoComplete="off"
-          onChange={(e) => {
-            setFormData({ ...formData, username: e.target.value });
-          }}
+          onChange={(e) =>
+            setFormData({ ...formData, username: e.target.value })
+          }
           value={formData.username}
           required
         />
@@ -31,9 +27,7 @@ const FirstStep = ({ formData, setFormData }) => {
           type="email"
           id="email"
           autoComplete="off"
-          onChange={(e) => {
-            setFormData({ ...formData, email: e.target.value });
-          }}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           value={formData.email}
           required
         />
@@ -45,9 +39,9 @@ const FirstStep = ({ formData, setFormData }) => {
           placeholder="Password"
           type="password"
           id="password"
-          onChange={(e) => {
-            setFormData({ ...formData, password: e.target.value });
-          }}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
           value={formData.password}
           required
         />

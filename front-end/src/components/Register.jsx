@@ -280,7 +280,7 @@ const Register = () => {
                   value={lastName}
                   required
                 />
-                {/* Last Name field*/}
+                {/* birthDay field*/}
                 <label htmlFor="birthDay">BirthDay:</label>
                 <Form.Control
                   type="date"

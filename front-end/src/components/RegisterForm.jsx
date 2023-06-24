@@ -1,7 +1,9 @@
-import { Col, Container, Row, Button, Alert } from "react-bootstrap";
+import { Col, Container, Row, Alert } from "react-bootstrap";
 import FirstStep from "./FirstStep";
 import { useState } from "react";
 import "../assets/SignForm.css";
+import SecondStep from "./SecondStep";
+import ThirdStep from "./ThirdStep";
 
 const maxStep = 3;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -34,10 +36,10 @@ const RegisterForm = () => {
     switch (page) {
       case 0:
         return <FirstStep formData={formData} setFormData={setFormData} />;
-      // case 1:
-      //   return <SecondStep formData={formData} setFormData={setFormData} />;
-      // case 2:
-      //   return <ThirdStep formData={formData} setFormData={setFormData} />;
+      case 1:
+        return <SecondStep formData={formData} setFormData={setFormData} />;
+      case 2:
+        return <ThirdStep formData={formData} setFormData={setFormData} />;
       default:
         return <FirstStep formData={formData} setFormData={setFormData} />;
     }
@@ -47,7 +49,6 @@ const RegisterForm = () => {
     if (page < maxStep - 1) {
       switch (page) {
         case 0:
-          //formData validation
           if (
             formData.username &&
             formData.password &&
@@ -55,37 +56,49 @@ const RegisterForm = () => {
             USER_REGEX.test(formData.username) &&
             PWD_REGEX.test(formData.password) &&
             EMAIL_REGEX.test(formData.email)
-          )
+          ) {
             setPage(page + 1);
-          else {
-            // setErrMsg("data not valid");
-
-            switch (true) {
-              case USER_REGEX.test(formData.username) === false:
-                setErrMsg(
-                  "Username not valid, istructions: 4 to 24 characters, Must begin with a letter, chars allowed: Letters, numbers, underscores, hyphens"
-                );
-                break;
-              case EMAIL_REGEX.test(formData.email) === false:
-                setErrMsg("Not a valid format for email");
-                break;
-              case PWD_REGEX.test(formData.password) === false:
-                setErrMsg(
-                  "Password not valid, istructions: - 8 to 24 characters\n- Must include uppercase and lowercase letters, a number and a special character.\n- Letters, numbers, underscores, hyphens allowed.\n- Allowed special characters: !, @, #,$,%"
-                );
-                break;
-
-              default:
-                break;
-            }
+            setErrMsg("");
+          } else {
+            setErrMsg(getErrorMessage());
           }
           break;
 
+        case 1:
+          if (
+            formData.firstName &&
+            formData.lastName &&
+            formData.birthDay &&
+            (formData.gender === "MALE" || formData.gender === "FEMALE")
+          ) {
+            setPage(page + 1);
+            setErrMsg("");
+          } else {
+            setErrMsg(getErrorMessage());
+          }
         default:
           break;
       }
     } else {
       //if page = maxStep-1 , submit
+    }
+  };
+
+  const getErrorMessage = () => {
+    switch (true) {
+      case USER_REGEX.test(formData.username) === false:
+        return "Username not valid, istructions: 4 to 24 characters, Must begin with a letter, chars allowed: Letters, numbers, underscores, hyphens";
+      case EMAIL_REGEX.test(formData.email) === false:
+        return "Not a valid format for email";
+      case PWD_REGEX.test(formData.password) === false:
+        return "Password not valid, istructions: 8 to 24 characters\n- Must include uppercase and lowercase letters, a number and a special character.\n- Letters, numbers, underscores, hyphens allowed.\n- Allowed special characters: !, @, #,$,%";
+      case !formData.gender ||
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.birthDay:
+        return "Please compile every field";
+      default:
+        return "Data input not valid";
     }
   };
   return (
