@@ -51,6 +51,7 @@ const ThirdStep = ({ formData, setFormData }) => {
         name="physicalActivityLevel"
         value="LOW"
         label="Low:"
+        checked={formData.physicalActivityLevel === "LOW"}
         required
         onClick={(e) => {
           setFormData({ ...formData, physicalActivityLevel: e.target.value });
@@ -66,6 +67,7 @@ const ThirdStep = ({ formData, setFormData }) => {
         name="physicalActivityLevel"
         value="MEDIUM"
         label="Medium:"
+        checked={formData.physicalActivityLevel === "MEDIUM"}
         required
         onClick={(e) => {
           setFormData({ ...formData, physicalActivityLevel: e.target.value });
@@ -81,6 +83,7 @@ const ThirdStep = ({ formData, setFormData }) => {
         name="physicalActivityLevel"
         value="HIGH"
         label="High:"
+        checked={formData.physicalActivityLevel === "HIGH"}
         required
         onClick={(e) => {
           setFormData({ ...formData, physicalActivityLevel: e.target.value });
@@ -98,8 +101,12 @@ const ThirdStep = ({ formData, setFormData }) => {
         id="physicallyActive"
         name="physicallyActive"
         label="Physically Active:"
+        checked={formData.physicallyActive}
         onClick={(e) => {
-          setFormData({ ...formData, physicallyActive: e.target.value });
+          setFormData({
+            ...formData,
+            physicallyActive: !formData.physicallyActive,
+          });
         }}
       />
       <p className="text-muted">

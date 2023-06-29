@@ -60,6 +60,7 @@ const SecondStep = ({ formData, setFormData }) => {
         name="gender"
         value="MALE"
         label="Male"
+        checked={formData.gender === "MALE"}
         required
         onClick={(e) =>
           setFormData({
@@ -74,6 +75,7 @@ const SecondStep = ({ formData, setFormData }) => {
         name="gender"
         value="FEMALE"
         label="Female"
+        checked={formData.gender === "FEMALE"}
         required
         onClick={(e) =>
           setFormData({
