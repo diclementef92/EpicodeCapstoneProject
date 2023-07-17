@@ -21,9 +21,9 @@ const RegisterForm = () => {
   const [responseMsg, setResponseMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const [validUsername, setValidUsername] = useState(true);
-  const [validEmail, setValidEmail] = useState(true);
-  const [validPwd, setValidPwd] = useState(true);
+  // const [validUsername, setValidUsername] = useState(true);
+  // const [validEmail, setValidEmail] = useState(true);
+  // const [validPwd, setValidPwd] = useState(true);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -86,32 +86,30 @@ const RegisterForm = () => {
       case 2:
         //if page = maxStep-1 , submit
         e.preventDefault();
-        const v1 = USER_REGEX.test(formData.username);
-        const v2 = PWD_REGEX.test(formData.password);
-        const v3 = EMAIL_REGEX.test(formData.email);
-        const msg = "";
-        if (!v1) msg += "username not valid\n";
-        if (!v2) msg += "password not valid\n";
-        if (!v3) msg += "email not valid\n";
-        if (!v1 || !v2 || !v3) {
-          setErrMsg(msg);
-          return;
-        }
-        const res = await SignUp(formData);
-        if (!res) {
-          setErrMsg("Server Error");
-          return;
-        }
-        if (res.errMessage) {
-          setErrMsg(res.errMessage);
-          return;
-        }
-        setResponseMsg(res);
-        setSuccess(true);
 
-        //logout if a user previous logged in
-        dispatch({ type: "LOGOUT" });
-        localStorage.removeItem("token");
+        if (
+          formData.initialWeightKg &&
+          formData.heightCm &&
+          formData.physicalActivityLevel
+        ) {
+          const res = await SignUp(formData);
+          if (!res) {
+            setErrMsg("Server Error");
+            return;
+          }
+          if (res.errMessage) {
+            setErrMsg(res.errMessage);
+            return;
+          }
+          setResponseMsg(res);
+          setSuccess(true);
+
+          //logout if a user previous logged in
+          dispatch({ type: "LOGOUT" });
+          localStorage.removeItem("token");
+        } else {
+          setErrMsg(getErrorMessage());
+        }
 
       default:
         break;
@@ -129,7 +127,11 @@ const RegisterForm = () => {
       case !formData.gender ||
         !formData.firstName ||
         !formData.lastName ||
-        !formData.birthDay:
+        !formData.birthDay ||
+        !formData.initialWeightKg ||
+        !formData.heightCm ||
+        !formData.physicalActivityLevel ||
+        !formData.physicallyActive:
         return "Please compile every field";
       default:
         return "Data input not valid";
@@ -140,14 +142,25 @@ const RegisterForm = () => {
       <Row className="mx-0">
         <Col></Col>
         <Col xs={12} sm={6} className="section-login">
+          {success ? (
+            <Alert variant="info">{responseMsg}</Alert>
+          ) : errMessage ? (
+            <Alert variant="danger">{errMessage}</Alert>
+          ) : (
+            ""
+          )}
           {conditionalComponent()}
-          {errMessage && <Alert variant="danger">{errMessage}</Alert>}
+
           <Row className="text-center mt-2">
             <Col xs={6}>
-              {page > 0 && <a onClick={() => setPage(page - 1)}>{"< Back"}</a>}
+              {page > 0 && (
+                <a className="pointer" onClick={() => setPage(page - 1)}>
+                  {"< Back"}
+                </a>
+              )}
             </Col>
             <Col xs={6}>
-              <a onClick={handleSubmit}>
+              <a onClick={handleSubmit} className="pointer">
                 {page < maxStep - 1 ? "Next >" : "Confirm"}
               </a>
             </Col>

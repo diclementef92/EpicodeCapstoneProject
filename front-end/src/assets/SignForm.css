@@ -56,3 +56,6 @@ input:valid + span::after {
   content: "✔";
   padding-left: 5px;
 }
+.pointer {
+  cursor: pointer;
+}

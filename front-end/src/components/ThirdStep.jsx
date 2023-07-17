@@ -1,7 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { useRef } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 
 const ThirdStep = ({ formData, setFormData }) => {
