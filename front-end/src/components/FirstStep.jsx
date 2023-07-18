@@ -1,6 +1,22 @@
-import { FloatingLabel, Form } from "react-bootstrap";
+import { useState } from "react";
+import {
+  Button,
+  FloatingLabel,
+  Form,
+  FormControl,
+  FormGroup,
+  InputGroup,
+} from "react-bootstrap";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
 const FirstStep = ({ formData, setFormData }) => {
+  const [passwordType, setPasswordType] = useState("password");
+
+  const togglePassword = () => {
+    if (passwordType === "password") setPasswordType("text");
+    else setPasswordType("password");
+  };
+
   return (
     <>
       <h2>Registration data:</h2>
@@ -37,7 +53,7 @@ const FirstStep = ({ formData, setFormData }) => {
       <FloatingLabel label="password" className="mb-2">
         <Form.Control
           placeholder="Password"
-          type="password"
+          type={passwordType}
           id="password"
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
@@ -45,6 +61,13 @@ const FirstStep = ({ formData, setFormData }) => {
           value={formData.password}
           required
         />
+        <Button variant="outline" onClick={togglePassword}>
+          {passwordType === "password" ? (
+            <BsFillEyeFill></BsFillEyeFill>
+          ) : (
+            <BsFillEyeSlashFill></BsFillEyeSlashFill>
+          )}
+        </Button>
       </FloatingLabel>
     </>
   );
