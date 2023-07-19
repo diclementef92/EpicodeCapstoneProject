@@ -50,17 +50,19 @@ const FirstStep = ({ formData, setFormData }) => {
       </FloatingLabel>
 
       {/* Password Field */}
-      <FloatingLabel label="password" className="mb-2">
-        <Form.Control
-          placeholder="Password"
-          type={passwordType}
-          id="password"
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-          value={formData.password}
-          required
-        />
+      <InputGroup>
+        <FloatingLabel label="password" className="mb-2">
+          <Form.Control
+            placeholder="Password"
+            type={passwordType}
+            id="password"
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            value={formData.password}
+            required
+          />
+        </FloatingLabel>
         <Button variant="outline" onClick={togglePassword}>
           {passwordType === "password" ? (
             <BsFillEyeFill></BsFillEyeFill>
@@ -68,7 +70,7 @@ const FirstStep = ({ formData, setFormData }) => {
             <BsFillEyeSlashFill></BsFillEyeSlashFill>
           )}
         </Button>
-      </FloatingLabel>
+      </InputGroup>
     </>
   );
 };
